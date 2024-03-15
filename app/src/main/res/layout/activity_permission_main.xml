@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="2"
+    tools:context=".permission.PermissionMain">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/image_permission"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/permission"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/permission"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+            <TextView
+                android:id="@+id/text_permission_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/permission_modify"
+                android:textColor="@color/black"
+                android:textSize="15sp"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                app:track="@drawable/custom_switch_track"
+                android:thumb="@drawable/ic_switch_thumb"
+                android:scaleX="1.3"
+                android:scaleY="1.3"
+                android:layout_marginRight="5dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/text_permission_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/permission_name"
+                android:textColor="@color/black"
+                android:textSize="15sp"/>
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                app:track="@drawable/custom_switch_track"
+                android:thumb="@drawable/ic_switch_thumb"
+                android:scaleX="1.3"
+                android:scaleY="1.3"
+                android:layout_marginRight="5dp"
+                />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/permission_btn_continue"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/Continue"
+            android:background="@drawable/custom_btn_continue"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:layout_marginTop="40dp"
+            android:textAllCaps="false"/>
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Don\'t Touch My Phone</string>
+    <string name="settings">Cài đặt</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="intro1">Đừng chạm vào điện thoại - Chống trộm</string>
+    <string name="intro2">Bảo vệ điện thoại của bạn khỏi bị trộm và ai đó</string>
+    <string name="intro3">Sẽ không ai chạm vào điện thoại của bạn</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Continue">Tiếp tục</string>
+    <string name="language">Chọn ngôn ngữ</string>
+    <string name="permission">Cho phép</string>
+    <string name="permission_modify">Sửa đổi cài đặt hệ thống</string>
+    <string name="permission_name">Quyền đặt tên</string>
+    <string name="tap_to_active">NHẤN ĐỂ HOẠT ĐỘNG</string>
+    <string name="how_to_use">Cách sử dụng ứng dụng này</string>
+    <string name="adjust_alam_sound">Điều chỉnh âm thanh báo động</string>
+    <string name="text_name_sound">Âm thanh</string>
+    <string name="dog">Con chó</string>
+    <string name="cat">Con mèo</string>
+    <string name="police">Cảnh sát</string>
+    <string name="doorbell">Chuông cửa</string>
+    <string name="hello">Xin chào</string>
+    <string name="harp">đàn hạc</string>
+    <string name="laughing">Cười</string>
+    <string name="clock">Đồng hồ</string>
+    <string name="rooster">Gà trống</string>
+    <string name="piano">Đàn piano</string>
+    <string name="sneeze">Hắt hơi</string>
+    <string name="train">Xe lửa</string>
+    <string name="wind">Gió</string>
+    <string name="whistle">Còi</string>
+
+    <string name="alarm_sound">Âm thanh báo động</string>
+    <string name="apply">Áp dụng</string>
+    <string name="sound_name">Tên âm thanh</string>
+    <string name="vibration">Rung</string>
+    <string name="flashlight">Đèn pin</string>
+    <string name="sound">Âm thanh</string>
+    <string name="volumes">Âm lượng</string>
+    <string name="duration">Khoảng thời gian</string>
+
+    <string name="change_language">Thay đổi ngôn ngữ</string>
+    <string name="support">Hãy ủng hộ chúng tôi 5 sao</string>
+    <string name="share">Chia sẻ cho bạn bè</string>
+    <string name="feedback">Nhận xét</string>
+
+    <string name="sensitivity">Độ nhạy</string>
+    <string name="extension">Sự mở rộng</string>
+    <string name="light_up">Sáng màn hình khi tìm kiếm</string>
+    <string name="flash_mode">Chế Độ Đèn Flash</string>
+    <string name="defaults">Mặc định</string>
+    <string name="disco_mode">Chế độ vũ trường</string>
+    <string name="sos">Chế độ khẩn cấp</string>
+    <string name="vibrate">Chế độ rung</string>
+
+    <string name="strong_vib">Rung mạnh</string>
+    <string name="heartbeat">Nhịp tim</string>
+
+    <string name="how">Cách sử dụng</string>
+    <string name="how1">Nhấn vào âm thanh để kích hoạt tính năng</string>
+    <string name="how2">Nếu ai đó tùy ý di chuyển điện thoại của bạn, ứng dụng sẽ phát hiện hành động đó và bắt đầu đổ chuông</string>
+    <string name="how3">Trước khi kích hoạt, bạn có thể cài đặt đèn pin, thời lượng, chuông,... tùy thích</string>
+
+    <string name="dialog_title_wifi">Rất tiếc! Không có mạng</string>
+    <string name="dialog_text_wifi">Có vẻ như bạn đang tạm thời bị gián đoạn mạng. Hoặc hãy kiểm tra kết nối mạng của bạn</string>
+    <string name="dialog_title_ads">Xóa quảng cáo</string>
+    <string name="dialog_text_ads">Không sử dụng quảng cáo_ trả tiền một lần!</string>
+
+    <string name="btn_dialog_wifi">Vào Cài đặt</string>
+    <string name="btn_dialog_ads">Xóa 5$</string>
+    <string name="notification">Nhấn để hủy bỏ</string>
+    <string name="text_active">NHẤN ĐỂ HỦY BỎ</string>
+
+</resources>

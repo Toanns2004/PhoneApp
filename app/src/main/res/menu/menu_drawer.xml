@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <group android:checkableBehavior="single">
+
+                <item android:id="@+id/change_language"
+                        android:title="@string/change_language"
+                    android:icon="@drawable/change"/>
+                <item android:id="@+id/support_us"
+                        android:title="@string/support"
+                    android:icon="@drawable/rate"/>
+                <item android:id="@+id/share_for_friend"
+                        android:title="@string/share"
+                    android:icon="@drawable/share"/>
+                <item android:id="@+id/feedback"
+                    android:title="@string/feedback"
+                    android:icon="@drawable/feedback"/>
+
+
+        </group>
+
+
+</menu>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Don\'t Touch My Phone</string>
+    <string name="settings">Paramètres</string>
+
+    <!-- TODO : Supprimer ou modifier ce texte d'espace réservé -->
+    <string name="intro1">Ne touchez pas au téléphone - Antivol</string>
+    <string name="intro2">Protégez votre téléphone du vol et de quelqu\'un</string>
+    <string name="intro3">Personne ne touchera votre téléphone</string>
+    <string name="hello_blank_fragment">Bonjour fragment vierge</string>
+    <string name="Continue">Continuer</string>
+    <string name="language">Sélectionner la langue</string>
+    <string name="permission">Autorisation</string>
+    <string name="permission_modify">Modifier les paramètres système</string>
+    <string name="permission_name">Autorisation de nom</string>
+    <string name="tap_to_active">TAP POUR ACTIF</string>
+    <string name="how_to_use">Comment utiliser cette application</string>
+    <string name="adjust_alam_sound">Ajuster le son de l\'alarme</string>
+    <string name="text_name_sound">Son</string>
+    <string name="dog">Chien</string>
+    <string name="cat">Chat</string>
+    <string name="police">Police</string>
+    <string name="doorbell">Sonnette</string>
+    <string name="hello">Bonjour</string>
+    <string name="harp">Harpe</string>
+    <string name="laughing">Rire</string>
+    <string name="clock">Horloge</string>
+    <string name="rooster">Coq</string>
+    <string name="piano">Piano</string>
+    <string name="sneeze">Éternuement</string>
+    <string name="train">Trainer</string>
+    <string name="wind">Vent</string>
+    <string name="whistle">Sifflet</string>
+
+    <string name="alarm_sound">Son de l\'alarme</string>
+    <string name="apply">Appliquer</string>
+    <string name="sound_name">Nom du son</string>
+    <string name="vibration">Vibrations</string>
+    <string name="flashlight">Lampe de poche</string>
+    <string name="sound">Son</string>
+    <string name="volumes">Volumes</string>
+    <string name="duration">Durée</string>
+
+    <string name="change_language">Changer de langue</string>
+    <string name="support">Soutenez-nous avec 5 start</string>
+    <string name="share">Partager avec des amis</string>
+    <string name="feedback">Commentaires</string>
+
+    <string name="sensitivity">Sensibilité</string>
+    <string name="extension">Extension</string>
+    <string name="light_up">Éclaire l\'écran lors de la recherche</string>
+    <string name="flash_mode">Mode lampe de poche</string>
+    <string name="defaults">Par défaut</string>
+    <string name="disco_mode">Mode Disco</string>
+    <string name="sos">Mode SOS</string>
+    <string name="vibrate">Mode Vibreur</string>
+
+    <string name="strong_vib">Forte vibration</string>
+    <string name="heartbeat">Battement de coeur</string>
+
+    <string name="how">Comment utiliser</string>
+    <string name="how1">Appuyez sur le son pour activer la fonctionnalité</string>
+    <string name="how2">Si quelqu\'un déplace arbitrairement votre téléphone, l\'application détectera cette action et commencera à sonner</string>
+    <string name="how3">Avant d\'activer, vous pouvez régler la lampe de poche, la durée, la cloche,... comme vous le souhaitez</string>
+
+    <string name="dialog_title_wifi">Oups! Pas d\'internet</string>
+    <string name="dialog_text_wifi">Il semble que vous soyez confronté à une interruption temporaire du réseau, ou vérifiez votre connexion réseau</string>
+    <string name="dialog_title_ads">Supprimer les annonces</string>
+    <string name="dialog_text_ads">Ne pas utiliser d\'expérience publicitaire avec un seul paiement!</string>
+
+    <string name="btn_dialog_wifi">Aller aux paramètres</string>
+    <string name="btn_dialog_ads">Supprimer de 5$</string>
+    <string name="notification">Cliquez pour annuler</string>
+    <string name="text_active">CLIQUEZ POUR ANNULER</string>
+
+</resources>

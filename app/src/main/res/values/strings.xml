@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Don\'t Touch My Phone</string>
+    <string name="settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="intro1">Don\'t touch phone - Anti theft</string>
+    <string name="intro2">Protect your phone from theft and someone</string>
+    <string name="intro3">Nobody will touch your phone</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Continue">Continue</string>
+    <string name="language">Select language</string>
+    <string name="permission">Permission</string>
+    <string name="permission_modify">Modify system settings</string>
+    <string name="permission_name">Name permission</string>
+    <string name="tap_to_active">TAP TO ACTIVE</string>
+    <string name="how_to_use">How to use this app</string>
+    <string name="adjust_alam_sound">Adjust alarm sound</string>
+    <string name="text_name_sound">Sound</string>
+    <string name="dog">Dog</string>
+    <string name="cat">Cat</string>
+    <string name="police">Police</string>
+    <string name="doorbell">Doorbell</string>
+    <string name="hello">Hello</string>
+    <string name="harp">Harp</string>
+    <string name="laughing">Laughing</string>
+    <string name="clock">Clock</string>
+    <string name="rooster">Rooster</string>
+    <string name="piano">Piano</string>
+    <string name="sneeze">Sneeze</string>
+    <string name="train">Train</string>
+    <string name="wind">Wind</string>
+    <string name="whistle">Whistle</string>
+
+    <string name="alarm_sound">Alarm sound</string>
+    <string name="apply">Apply</string>
+    <string name="sound_name">Sound Name</string>
+    <string name="vibration">Vibration</string>
+    <string name="flashlight">Flashlight</string>
+    <string name="sound">Sound</string>
+    <string name="volumes">Volumes</string>
+    <string name="duration">Duration</string>
+
+    <string name="change_language">Change language</string>
+    <string name="support">Support Us with 5 start</string>
+    <string name="share">Share for friends</string>
+    <string name="feedback">Feedback</string>
+
+    <string name="sensitivity">Sensitivity</string>
+    <string name="extension">Extension</string>
+    <string name="light_up">Lightup the screen when searching</string>
+    <string name="flash_mode">FlashLight Mode</string>
+    <string name="defaults">Default</string>
+    <string name="disco_mode">Disco Mode</string>
+    <string name="sos">SOS Mode</string>
+    <string name="vibrate">Vibrate Mode</string>
+
+    <string name="strong_vib">Strong vibration</string>
+    <string name="heartbeat">Heartbeat</string>
+
+    <string name="how">How to use</string>
+    <string name="how1">Tap the sound to activate the feature</string>
+    <string name="how2">If someone arbitrarily moves your phone the app will detect that  action and start ringing</string>
+    <string name="how3">Before activating , you can set the flashlight,duration , bell ,... as you like</string>
+
+
+    <string name="dialog_title_wifi">Oops! No internet</string>
+    <string name="dialog_text_wifi">Looks like you are facing a temporary network interruption, Or check your network connection</string>
+    <string name="dialog_title_ads">Remove ads</string>
+    <string name="dialog_text_ads">Using no ads_ experience whit once pay!</string>
+    <string name="btn_dialog_wifi">Go Settings</string>
+    <string name="btn_dialog_ads">Remove by 5$</string>
+
+
+    <string name="notification">Click to cancel</string>
+    <string name="text_active">CLICK TO CANCEL</string>
+</resources>

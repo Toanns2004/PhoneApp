@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardMaxElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <ImageButton
+            android:id="@+id/icon_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete"
+            android:background="@color/white"
+            android:layout_gravity="end"
+            android:layout_margin="10dp"/>
+
+        <ImageView
+            android:id="@+id/image_disconnect_wifi"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/disconnect_wifi"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/text_dialog1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_title_wifi"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:id="@+id/text_dialog2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dialog_text_wifi"
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+        <RelativeLayout
+            android:id="@+id/button_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:background="@drawable/custom_btn_ok">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:padding="15dp"
+                android:text="@string/btn_dialog_wifi"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

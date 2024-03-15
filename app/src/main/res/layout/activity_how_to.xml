@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    android:orientation="vertical"
+    tools:context=".how.HowToActivity">
+
+    <LinearLayout
+        android:id="@+id/toolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back"
+            android:background="@color/white"
+            android:layout_margin="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/how"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:id="@+id/image_how_1"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/image_how_1"
+            />
+        <ImageView
+            android:id="@+id/rectangle_yellow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/rectangle_yello"
+            android:layout_below="@+id/image_how_1"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/how1"
+            android:layout_toEndOf="@+id/rectangle_yellow"
+            android:layout_below="@+id/image_how_1"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:id="@+id/image_how_2"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/image_how_2"
+            />
+        <ImageView
+            android:id="@+id/rectangle_purl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/rectangle_purl"
+            android:layout_below="@+id/image_how_2"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/how2"
+            android:layout_toEndOf="@+id/rectangle_purl"
+            android:layout_below="@+id/image_how_2"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/toolbarLayout"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        tools:ignore="MissingConstraints">
+        <ImageView
+            android:id="@+id/image_how_3"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/image_how_3"
+            />
+        <ImageView
+            android:id="@+id/rectangle_pink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/rectangle_pink"
+            android:layout_below="@+id/image_how_3"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/how3"
+            android:layout_toEndOf="@+id/rectangle_pink"
+            android:layout_below="@+id/image_how_3"
+            android:layout_marginStart="10dp"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>

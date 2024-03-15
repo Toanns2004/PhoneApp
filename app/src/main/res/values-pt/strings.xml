@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Don\'t Touch My Phone</string>
+    <string name="settings">Configurações</string>
+
+    <!-- TODO: Remover ou alterar este texto de espaço reservado -->
+    <string name="intro1">Não toque no telefone - Anti-roubo</string>
+    <string name="intro2">Proteja seu telefone contra roubo e alguém</string>
+    <string name="intro3">Ninguém tocará no seu telefone</string>
+    <string name="hello_blank_fragment">Olá, fragmento em branco</string>
+    <string name="Continue">Continuar</string>
+    <string name="language">Selecione o idioma</string>
+    <string name="permission">Permissão</string>
+    <string name="permission_modify">Modificar configurações do sistema</string>
+    <string name="permission_name">Permissão de nome</string>
+    <string name="tap_to_active">TOQUE PARA ATIVO</string>
+    <string name="how_to_use">Como usar este aplicativo</string>
+    <string name="adjust_alam_sound">Ajustar o som do alarme</string>
+    <string name="text_name_sound">Som</string>
+    <string name="dog">Cão</string>
+    <string name="cat">Gato</string>
+    <string name="police">Polícia</string>
+    <string name="doorbell">Campainha</string>
+    <string name="hello">Olá</string>
+    <string name="harp">Harpa</string>
+    <string name="laughing">Rindo</string>
+    <string name="clock">Relógio</string>
+    <string name="rooster">Galo</string>
+    <string name="piano">Piano</string>
+    <string name="sneeze">Espirro</string>
+    <string name="train">Treinar</string>
+    <string name="wind">Vento</string>
+    <string name="whistle">Apito</string>
+
+    <string name="alarm_sound">Som do alarme</string>
+    <string name="apply">Aplicar</string>
+    <string name="sound_name">Nome do som</string>
+    <string name="vibration">Vibração</string>
+    <string name="flashlight">Lanterna</string>
+    <string name="sound">Som</string>
+    <string name="volumes">Volumes</string>
+    <string name="duration">Duração</string>
+
+    <string name="change_language">Alterar idioma</string>
+    <string name="support">Apoie-nos com 5 partidas</string>
+    <string name="share">Compartilhar para amigos</string>
+    <string name="feedback">Comentários</string>
+
+    <string name="sensitivity">Sensibilidade</string>
+    <string name="extension">Extensão</string>
+    <string name="light_up">Ilumina a tela ao pesquisar</string>
+    <string name="flash_mode">Modo Lanterna</string>
+    <string name="defaults">Padrão</string>
+    <string name="disco_mode">Modo Disco</string>
+    <string name="sos">Modo SOS</string>
+    <string name="vibrate">Modo Vibrar</string>
+
+    <string name="strong_vib">Vibração forte</string>
+    <string name="heartbeat">Batimento cardíaco</string>
+
+    <string name="how">Como usar</string>
+    <string name="how1">Toque no som para ativar o recurso</string>
+    <string name="how2">Se alguém mover seu telefone arbitrariamente, o aplicativo detectará essa ação e começará a tocar</string>
+    <string name="how3">Antes de ativar, você pode definir a lanterna, duração, campainha,... como quiser</string>
+
+    <string name="dialog_title_wifi">Ops! Sem internet</string>
+    <string name="dialog_text_wifi">Parece que você está enfrentando uma interrupção temporária de rede ou verifique sua conexão de rede</string>
+    <string name="dialog_title_ads">Remover anúncios</string>
+    <string name="dialog_text_ads">Não usar anúncios_ experiência com pagamento único!</string>
+
+    <string name="btn_dialog_wifi">Ir Configurações</string>
+    <string name="btn_dialog_ads">Remover por 5$</string>
+
+    <string name="notification">Clique para cancelar</string>
+    <string name="text_active">CLIQUE PARA CANCELAR</string>
+
+</resources>
