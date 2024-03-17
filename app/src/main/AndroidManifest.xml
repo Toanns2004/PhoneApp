@@ -12,7 +12,7 @@
 
 
     <application
-        android:name=".main.ser.ApplicationApp"
+        android:name=".sev.ApplicationApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -67,7 +67,7 @@
                     tools:ignore="BatteryLife" />
             </intent-filter>
         </receiver>
-        <service android:name="com.example.donttouchmyphone.main.ser.ServiceApp" />
+        <service android:name="com.example.donttouchmyphone.sev.ServiceApp" />
     </application>
 
 </manifest>

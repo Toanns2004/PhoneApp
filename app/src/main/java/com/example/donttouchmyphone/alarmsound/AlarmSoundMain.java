@@ -29,12 +29,14 @@ import com.example.donttouchmyphone.alarmsound.iface.IClickTime;
 import com.example.donttouchmyphone.main.MainActivity;
 import com.example.donttouchmyphone.model.Sound;
 import com.example.donttouchmyphone.model.Time;
+import com.example.donttouchmyphone.sev.DataLocalManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AlarmSoundMain extends AppCompatActivity {
 
+    private static final String SOUND_KEY = "SOUND_KEY";
     RecyclerView rcl,rclTime;
     SoundAlarmAdapter adapter;
     TimeAdapter timeAdapter;
@@ -49,12 +51,13 @@ public class AlarmSoundMain extends AppCompatActivity {
     Vibrator vibrator;
     SwitchCompat swVibration,swFlash,swSound;
     Sound sound;
-    int music;
     SharedPreferences sharedPreferences;
 
-    int time;
+    Time time;
 
     SeekBar seekBar;
+
+    Boolean checkSound, checkVibration,checkFlash;
 
 
     @Override
@@ -72,14 +75,20 @@ public class AlarmSoundMain extends AppCompatActivity {
 
         getDataFragmentMain();
 
+
+        time = DataLocalManager.getTimeValue();
+
+
+        mediaPlayer = MediaPlayer.create(AlarmSoundMain.this,sound.getMusic());
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 
-
-
+        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
 
         //phát nhạc
-        mediaPlayer = MediaPlayer.create(AlarmSoundMain.this,sound.getMusic());
+
         IPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,36 +113,83 @@ public class AlarmSoundMain extends AppCompatActivity {
         });
 
 
+       checkSound = DataLocalManager.getSound();
+       if (!checkSound){
+           swSound.setChecked(false);
+           seekBar.setEnabled(false);
+           audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,0,0);
+       }else {
+           swSound.setChecked(true);
+           seekBar.setEnabled(true);
+           audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC),0);
+       }
 
-
-        //Volume
-        audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-
-        final boolean[] savedStreamMuted = {false};
-        int stream = AudioManager.STREAM_MUSIC;
         swSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked){
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        savedStreamMuted[0] = true;
-                        audioManager.adjustStreamVolume(stream, AudioManager.ADJUST_MUTE, 0);
-                    } else {
-                        audioManager.setStreamMute(stream, true);
-                    }
+                if (isChecked) {
+                    checkSound = true;
+                    seekBar.setEnabled(true);
+//                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,audioManager.getStreamVolume(currentVolume),0);
+
+                    DataLocalManager.setSound(true);
+
+                } else {
+                    checkSound = false;
+                    seekBar.setEnabled(false);
+//                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,0,0);
+
+                    DataLocalManager.setSound(false);
+                }
+            }
+        });
+
+        checkVibration = DataLocalManager.getVibration();
+        if (!checkVibration){
+            swVibration.setChecked(false);
+        }else {
+            swVibration.setChecked(true);
+        }
+        swVibration.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    checkVibration = true;
+                    DataLocalManager.setVibration(true);
+
                 }else {
+                    checkVibration = false;
+                    DataLocalManager.setVibration(false);
 
                 }
             }
         });
 
-        int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
-        int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        checkFlash = DataLocalManager.getFlashLight();
+        if (!checkFlash){
+            swFlash.setChecked(false);
+        }else {
+            swFlash.setChecked(true);
+        }
+        swFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    checkFlash = true;
+                    DataLocalManager.setFlashLight(true);
+
+                }else {
+                    checkFlash = false;
+                    DataLocalManager.setFlashLight(false);
+
+                }
+            }
+        });
+
+        //Volume
         seekBar.setMax(maxVolume);
         seekBar.setProgress(currentVolume);
         changeSeekBar();
-
-
     }
 
 
@@ -141,16 +197,21 @@ public class AlarmSoundMain extends AppCompatActivity {
 
     //
     private void sendMainFragment() {
+        DataLocalManager.setTimeValue(time);
         Intent intent = new Intent(AlarmSoundMain.this, MainActivity.class);
         Bundle bundle = new Bundle();
         bundle.putInt("music",sound.getMusic());
-        bundle.putInt("time",time);
+        bundle.putInt("time",time.getTime());
+        bundle.putBoolean("sound_alarm",checkSound);
+        bundle.putBoolean("vibration_alarm",checkVibration);
+        bundle.putBoolean("flash_alarm",checkFlash);
         intent.putExtra("sendMainFragment",bundle);
         setResult(Activity.RESULT_OK,intent);
         finish();
     }
 
     private void getDataFragmentMain() {
+
         Intent intent= getIntent();
         Bundle bundle = intent.getBundleExtra("intent_sound");
         if (bundle!=null){
@@ -219,7 +280,7 @@ public class AlarmSoundMain extends AppCompatActivity {
     IClickTime iClickTime = new IClickTime() {
         @Override
         public void getTime(Time t) {
-            time = t.getTime();
+            time = t;
         }
 
         @Override
@@ -267,6 +328,11 @@ public class AlarmSoundMain extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private void setTimeSound(Time time){
+
     }
 
 }

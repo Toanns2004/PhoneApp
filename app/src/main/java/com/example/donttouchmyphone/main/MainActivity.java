@@ -51,12 +51,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ImageButton imageButton,btnSetting,btnBack,btnAd,btnDel;
     TextView textNameApp;
     Dialog dialog;
-
-    private int music;
-    private int time;
-
     boolean wifi;
-    static final String key_activity ="previous_activity";
+    static final String KEY_PREVIOUS_ACTIVITY ="KEY_PREVIOUS_ACTIVITY";
 
     static final String ACTION_KEY = "MAIN_ACTION";
 
@@ -77,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         FrameLayout frameLayout = findViewById(R.id.frame_layout_main);
         anhXa();
-//        broadcastReceiver = new BroadcastReceiverApp();
-//        registerNetworkBroadcast();
+        broadcastReceiver = new BroadcastReceiverApp();
+        registerNetworkBroadcast();
 
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.frame_layout_main,new MainFragment());
@@ -144,12 +140,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
-//        onBackPress();
+        onBackPress();
     }
 
     private void registerNetworkBroadcast() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            registerReceiver(broadcastReceiver,new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(ACTION_KEY);
+            registerReceiver(broadcastReceiver,intentFilter);
         }
     }
 
@@ -183,23 +181,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id== R.id.change_language){
             Intent intent1 = new Intent(MainActivity.this, MainLanguage.class);
-            intent1.putExtra("activity",key_activity);
+            intent1.putExtra("activity",KEY_PREVIOUS_ACTIVITY);
             startActivity(intent1);
             navigationView.getMenu().findItem(id).setCheckable(false);
         }else if (id== R.id.support_us) {
-            if (!wifi){
                 dialog.show();
-            }
             navigationView.getMenu().findItem(id).setCheckable(false);
         } else if (id== R.id.share_for_friend) {
-            if (!wifi){
                 dialog.show();
-            }
             navigationView.getMenu().findItem(id).setCheckable(false);
         }else  if (id == R.id.feedback){
-            if (!wifi){
                 dialog.show();
-            }
             navigationView.getMenu().findItem(id).setCheckable(false);
         }
 
@@ -231,20 +223,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onResume() {
         super.onResume();
         Log.e("onDestroy","onResume");
-//        Intent intent = getIntent();
-//        if (intent != null && intent.hasExtra("alarmSound_sendMain")) {
-//            Bundle bundle = intent.getBundleExtra("alarmSound_sendMain");
-//            if (bundle != null) {
-//                music = bundle.getInt("music");
-//                time = bundle.getInt("time");
-//                Bundle data = new Bundle();
-//                data.putInt("dataMusic", music);
-//                data.putInt("dataTime", time);
-//                // Tạo mới một instance của MainFragment
-//                MainFragment mainFragment = new MainFragment();
-//                mainFragment.setArguments(data);
-//            }
-//        }
     }
 
 
@@ -265,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        unregisterReceiver(broadcastReceiver);
+        unregisterReceiver(broadcastReceiver);
         Log.e("onDestroy","onDestroy");
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donttouchmyphone.R;
 import com.example.donttouchmyphone.alarmsound.iface.IClickTime;
 import com.example.donttouchmyphone.model.Time;
+import com.example.donttouchmyphone.sev.DataLocalManager;
 
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
 
     List<Time> timeList;
     IClickTime iClickTime;
+
+//    Time t = DataLocalManager.getTimeValue();
+
 
     public TimeAdapter(List<Time> timeList, IClickTime iClickTime) {
         this.timeList = timeList;
@@ -39,13 +43,19 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
        Time time = timeList.get(position);
 
        holder.textView.setText(time.getName());
-
        if (time.isCheck()){
            holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration);
        }else {
            holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration_uncheck);
 
        }
+
+//        if (time == t){
+//            holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration);
+//        }else {
+//            holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration_uncheck);
+//
+//        }
 
        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -57,6 +67,8 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
                holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration);
                notifyDataSetChanged();
                iClickTime.getTime(time);
+//               DataLocalManager.setTime(time.isCheck());
+               DataLocalManager.setTimeValue(time);
            }
        });
     }

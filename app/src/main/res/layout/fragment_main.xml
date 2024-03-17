@@ -19,27 +19,45 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_gravity="center">
-
             <RelativeLayout
-                android:id="@+id/circle_active"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:id="@+id/rectangle_tap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/custom_circle_active">
+                >
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/animation_active"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_phone" />
+                    app:lottie_autoPlay="true"
+                    app:lottie_rawRes="@raw/animation" />
 
+                <RelativeLayout
+                    android:id="@+id/circle_active"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/custom_circle_active">
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_phone" />
+
+                </RelativeLayout>
             </RelativeLayout>
+
+
             <TextView
                 android:id="@+id/text_to_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tap_to_active"
-                android:layout_below="@+id/circle_active"
+                android:layout_below="@+id/rectangle_tap"
                 android:layout_centerHorizontal="true"
                 android:textSize="18sp"
                 android:textColor="@color/blue"

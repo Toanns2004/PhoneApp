@@ -12,23 +12,25 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.donttouchmyphone.main.MainActivity;
+import com.example.donttouchmyphone.sev.DataLocalManager;
 
 public class BroadcastReceiverApp extends BroadcastReceiver {
+    static final String ACTION_KEY = "MAIN_ACTION";
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
             if (isOnline(context)){
-                Toast.makeText(context, "Có wifi", Toast.LENGTH_SHORT).show();
+                sendMainActivity(context,true);
             }else {
-                Toast.makeText(context, "Không Có wifi", Toast.LENGTH_SHORT).show();
+                sendMainActivity(context,false);
             }
         }catch (NullPointerException e){
             e.printStackTrace();
         }
     }
-    private void sendMainActivity(Context context) {
-        Intent intent = new Intent("MAIN_ACTION");
-        intent.putExtra("broadcastTrue",true);
+    private void sendMainActivity(Context context, boolean value) {
+        Intent intent = new Intent(ACTION_KEY);
+        intent.putExtra("broadcastTrue",value);
         context.sendBroadcast(intent);
     }
 

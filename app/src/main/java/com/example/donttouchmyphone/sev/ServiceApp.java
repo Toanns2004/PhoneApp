@@ -1,20 +1,15 @@
-package com.example.donttouchmyphone.main.ser;
+package com.example.donttouchmyphone.sev;
 
-import static com.example.donttouchmyphone.main.ser.ApplicationApp.CHANNEL_ID;
-
-import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.ResultReceiver;
@@ -25,10 +20,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.donttouchmyphone.R;
 import com.example.donttouchmyphone.main.MainActivity;
-import com.example.donttouchmyphone.main.fragment.MainFragment;
 
 import java.util.Date;
-import java.util.List;
 
 public class ServiceApp extends Service implements SensorEventListener {
     private SensorManager sensorManager;

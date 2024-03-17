@@ -1,4 +1,4 @@
-package com.example.donttouchmyphone.main.ser;
+package com.example.donttouchmyphone.sev;
 
 import android.app.Application;
 import android.app.NotificationChannel;
@@ -9,6 +9,7 @@ public class ApplicationApp extends Application {
     public static final String CHANNEL_ID = "NOTIFICATION_CODE";
     @Override
     public void onCreate() {
+        DataLocalManager.init(getApplicationContext());
         createNotification();
 
         super.onCreate();

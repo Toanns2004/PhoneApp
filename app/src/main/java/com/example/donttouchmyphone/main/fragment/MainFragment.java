@@ -1,9 +1,13 @@
 package com.example.donttouchmyphone.main.fragment;
 
 import static android.app.Activity.RESULT_OK;
+import static android.content.Context.AUDIO_SERVICE;
+import static android.content.Context.VIBRATOR_SERVICE;
 
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -16,7 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.util.Log;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,13 +29,16 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.example.donttouchmyphone.R;
 import com.example.donttouchmyphone.alarmsound.AlarmSoundMain;
 import com.example.donttouchmyphone.how.HowToActivity;
 import com.example.donttouchmyphone.model.Sound;
 import com.example.donttouchmyphone.adapter.SoundAdapter;
 import com.example.donttouchmyphone.main.iface.IClickItem;
-import com.example.donttouchmyphone.main.ser.ServiceApp;
+import com.example.donttouchmyphone.sev.DataLocalManager;
+import com.example.donttouchmyphone.sev.ServiceApp;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,10 +55,14 @@ public class MainFragment extends Fragment  {
     ImageButton btnHow;
     boolean service=false;
     private boolean changeDevice;
-
+    LottieAnimationView animationView;
     private MediaPlayer mediaPlayer;
     private int music = R.raw.dogbark;
-    private int time = 15000;
+    private int time = 1500;
+    AudioManager audioManager;
+    Vibrator vibrator;
+    Boolean checkSound, checkVibration,checkFlash ;
+
 
     IClickItem iClickItem = new IClickItem() {
         @Override
@@ -72,6 +84,10 @@ public class MainFragment extends Fragment  {
                         if (bundle!=null){
                             music = bundle.getInt("music");
                             time = bundle.getInt("time");
+                            checkSound = bundle.getBoolean("sound_alarm");
+                            checkVibration = bundle.getBoolean("vibration_alarm");
+                            checkFlash = bundle.getBoolean("flash_alarm");
+
                         }
                     }
                 }
@@ -92,8 +108,16 @@ public class MainFragment extends Fragment  {
         rcl.setLayoutManager(new GridLayoutManager(requireActivity(),2));
         rcl.setAdapter(adapter);
 
-        Log.e("music",music+"");
-        Log.e("music",time+"");
+
+        checkSound = DataLocalManager.getSound();
+//
+        checkVibration = DataLocalManager.getVibration();
+//        time= DataLocalManager.getTimeValue();
+
+        vibrator = (Vibrator) requireActivity().getSystemService(VIBRATOR_SERVICE);
+        audioManager = (AudioManager) requireActivity().getSystemService(AUDIO_SERVICE);
+
+
 
         rlt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +130,7 @@ public class MainFragment extends Fragment  {
                         mediaPlayer.stop();
                         mediaPlayer.release();
                         mediaPlayer = null;
+                        vibrator.cancel();
                     }
                 }
 
@@ -129,10 +154,17 @@ public class MainFragment extends Fragment  {
     private void clickStopServiceApp() {
         Intent intent = new Intent(requireActivity(), ServiceApp.class);
         requireActivity().stopService(intent);
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        vibrator.cancel();
         service = false;
         txtActive.setText(R.string.tap_to_active);
         int color = getResources().getColor(R.color.blue);
         txtActive.setTextColor(color);
+        animationView.cancelAnimation();
     }
 
     private void clickServiceApp() {
@@ -166,9 +198,11 @@ public class MainFragment extends Fragment  {
         rlt = view.findViewById(R.id.tap_to_active);
         btnHow = view.findViewById(R.id.icon_next_how_to_use);
         txtActive = view.findViewById(R.id.text_to_active);
+        animationView = view.findViewById(R.id.animation_active);
     }
 
     private void sendAlarmSound(Sound sound){
+        clickStopServiceApp();
         Intent intent = new Intent(requireActivity(), AlarmSoundMain.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("sound_main",sound);
@@ -183,31 +217,54 @@ public class MainFragment extends Fragment  {
                 super.onReceiveResult(resultCode, resultData);
                 if (resultCode == 10 && resultData != null){
                     changeDevice = resultData.getBoolean("changeDevice");
-                    if (changeDevice){
-                        if (mediaPlayer == null) { // Kiểm tra mediaPlayer có null hay không
-                            mediaPlayer = MediaPlayer.create(requireActivity(), music);
-                            mediaPlayer.start();
-                            mediaPlayer.setLooping(true);
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                                        mediaPlayer.stop();
-                                        mediaPlayer.release();
-                                        mediaPlayer = null;
-                                    }
-                                }
-                            }, time);
 
-                        } else if (mediaPlayer.isPlaying()) { // Kiểm tra mediaPlayer đang phát nhạc hay không
-                            mediaPlayer.stop();
-                            mediaPlayer.release();
-                            mediaPlayer = null;
+                    if (changeDevice){
+                        animationView.setRepeatCount(LottieDrawable.INFINITE);
+                        animationView.playAnimation();
+                        if (checkVibration){
+                            if (vibrator.hasVibrator()){
+                                getVibration();
+                            }
                         }
+                        if (checkSound) {
+                            if (mediaPlayer == null) {
+
+                                mediaPlayer = MediaPlayer.create(requireActivity(), music);
+                                mediaPlayer.start();
+                                mediaPlayer.setLooping(true);
+
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                                            mediaPlayer.stop();
+                                            mediaPlayer.release();
+                                            mediaPlayer = null;
+                                        }
+                                    }
+                                }, time);
+
+                            } else if (mediaPlayer.isPlaying()) { // Kiểm tra mediaPlayer đang phát nhạc hay không
+                                mediaPlayer.stop();
+                                mediaPlayer.release();
+                                mediaPlayer = null;
+                            }
+                        }
+
                     }
                 }
             }
         };
+
+    }
+
+    private void getVibration(){
+        // Tính thời gian của mỗi chu kỳ rung
+        long vibrationDuration = time;
+        long pauseDuration = 0;
+        long[] pattern = {0, vibrationDuration, pauseDuration};
+        VibrationEffect effect = VibrationEffect.createWaveform(pattern, -1); // -1 để lặp vô hạn
+        vibrator.vibrate(effect);
 
     }
 

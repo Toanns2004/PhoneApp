@@ -17,6 +17,7 @@ import com.example.donttouchmyphone.adapter.LanguageAdapter;
 import com.example.donttouchmyphone.intro.IntroActivity;
 import com.example.donttouchmyphone.main.MainActivity;
 import com.example.donttouchmyphone.model.Language;
+import com.example.donttouchmyphone.sev.DataLocalManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +28,21 @@ public class MainLanguage extends AppCompatActivity {
     RecyclerView rlv;
     LanguageAdapter adapter;
     List<Language> list;
-    LanguagePreferenceHelper languagePreferenceHelper;
+
     String languageCode = "";
     String previousActivityName;
-    static final String key_previous ="previous_activity";
+    static final String KEY_PREVIOUS_ACTIVITY ="KEY_PREVIOUS_ACTIVITY";
     IClickItem iClickItem = new IClickItem() {
         @Override
         public void getItem(Language language) {
+
             btnOk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     setLanguageObject(language);
+//                    DataLocalManager.setLanguage();
                     Intent intent;
-                    if (key_previous.equals(previousActivityName)){
+                    if (KEY_PREVIOUS_ACTIVITY.equals(previousActivityName)){
                         intent = new Intent(MainLanguage.this, MainActivity.class);
                     }else {
                         intent = new Intent(MainLanguage.this, IntroActivity.class);
@@ -55,21 +58,14 @@ public class MainLanguage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language);
         anhXa();
+        setLanguage(DataLocalManager.getLanguageCode());
         adapter = new LanguageAdapter(list,iClickItem);
         rlv.setLayoutManager(new GridLayoutManager(MainLanguage.this,2));
         rlv.setAdapter(adapter);
 
         previousActivityName = getIntent().getStringExtra("activity");
 
-//        SharedPreferences sharedPreferences = getSharedPreferences("save",MODE_PRIVATE);
-//        languageCode = sharedPreferences.getString("lang","");
 
-        languagePreferenceHelper = new LanguagePreferenceHelper(this);
-        // Kiểm tra nếu ngôn ngữ chưa được lưu trong SharedPreferences, lưu ngôn ngữ mặc định là "en"
-        if (languagePreferenceHelper.getLanguage().isEmpty()) {
-            languagePreferenceHelper.saveLanguage("en");
-        }
-        setLanguage(languagePreferenceHelper.getLanguage());
 
 
     }
@@ -106,9 +102,8 @@ public class MainLanguage extends AppCompatActivity {
                 break;
 
         }
-        // Lưu ngôn ngữ đã chọn vào SharedPreferences
-        languagePreferenceHelper.saveLanguage(languageCode);
-        // Áp dụng ngôn ngữ đã chọn cho toàn bộ ứng dụng
+
+        DataLocalManager.saveLanguageCode(languageCode);
         setLanguage(languageCode);
     }
 
@@ -129,7 +124,7 @@ public class MainLanguage extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("save",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("lang",languageCode);
-        editor.commit();
+        editor.apply();
     }
 
 
