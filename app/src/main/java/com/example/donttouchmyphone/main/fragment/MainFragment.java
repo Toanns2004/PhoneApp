@@ -450,4 +450,10 @@ public class MainFragment extends Fragment  {
         super.onPause();
         clickStopServiceApp();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 }

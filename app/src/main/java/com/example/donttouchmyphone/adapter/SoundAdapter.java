@@ -48,15 +48,16 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHol
         }else {
             holder.rcl.setBackgroundResource(R.drawable.custom_alarm_sound);
         }
-
         holder.rcl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sound.setChoose(true);
                 iClickItem.getItem(sound);
-                notifyItemChanged(position);
             }
         });
+
+
+
     }
 
     @Override
