@@ -63,13 +63,13 @@ public class DataLocalManager {
         return DataLocalManager.getDataLocalManager().preferencesApp.getInt(TIME_KEY_VALUE);
     }
 
-//    public static void setTime(boolean time){
-//        DataLocalManager.getDataLocalManager().preferencesApp.setBoolean(TIME_KEY,time);
-//    }
-//
-//    public static boolean getTime(){
-//        return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(TIME_KEY);
-//    }
+    public static void setMusic(int music){
+        DataLocalManager.getDataLocalManager().preferencesApp.setInt(TIME_KEY,music);
+    }
+
+    public static int getMusic(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getInt(TIME_KEY);
+    }
 
 
 

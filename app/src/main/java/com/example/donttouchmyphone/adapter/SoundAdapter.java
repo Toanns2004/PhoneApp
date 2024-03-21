@@ -42,18 +42,19 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHol
 
         holder.imageView.setImageResource(sound.getImage());
         holder.textView.setText(sound.getName());
-        Log.e("sound",""+DataLocalManager.getSoundAlarm());
-        Log.e("sound",sound+"");
-        if (sound == DataLocalManager.getSoundAlarm()){
-
+        int music = DataLocalManager.getMusic();
+        if (sound.getMusic() == music){
             holder.rcl.setBackgroundResource(R.drawable.custom_alarm_sound_click);
+        }else {
+            holder.rcl.setBackgroundResource(R.drawable.custom_alarm_sound);
         }
+
         holder.rcl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sound.setChoose(true);
                 iClickItem.getItem(sound);
-
+                notifyItemChanged(position);
             }
         });
     }

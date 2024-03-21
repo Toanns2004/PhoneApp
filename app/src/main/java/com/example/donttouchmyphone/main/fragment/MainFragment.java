@@ -121,7 +121,10 @@ public class MainFragment extends Fragment  {
             sound = list.get(0);
             time = 15000;
             checkSound =true;
+            DataLocalManager.setSoundAlarm(sound);
             DataLocalManager.setTimeValue(time);
+            DataLocalManager.setFlashLight(false);
+            DataLocalManager.setVibration(false);
             DataLocalManager.setFirstInstalled(true);
         }else {
             sound =  DataLocalManager.getSoundAlarm();
@@ -169,7 +172,7 @@ public class MainFragment extends Fragment  {
     private void clickStopServiceApp() {
         Intent intent = new Intent(requireActivity(), ServiceApp.class);
         requireActivity().stopService(intent);
-        if (mediaPlayer != null) {
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer = null;
@@ -239,12 +242,13 @@ public class MainFragment extends Fragment  {
 
                         animationView.setRepeatCount(LottieDrawable.INFINITE);
                         animationView.playAnimation();
+                        isSoundActive();
 
                         isVibrationActive();
 
                         isFlashLightActive();
 
-                        isSoundActive();
+
                     }
                 }
             }
@@ -366,16 +370,17 @@ public class MainFragment extends Fragment  {
         if (checkFlash){
             DataLocalManager.setFlashLight(true);
             String flashType = DataLocalManager.getRadioFlash();
-            if (flashType !=null){
-                if (flashType.equals("default")){
+            if (flashType !=null) {
+                if (flashType.equals("default")) {
                     handler.post(flashDefault);
-                }else if (flashType.equals("disco")){
+                } else if (flashType.equals("disco")) {
                     handler.post(flashDisco);
                 } else if (flashType.equals("sos")) {
                     handler.post(flashSos);
+                } else {
+                    handler.post(flashDefault);
                 }
-            }else {
-                handler.post(flashDefault);
+
             }
             handler.postDelayed(new Runnable() {
                 @Override
@@ -400,9 +405,10 @@ public class MainFragment extends Fragment  {
                         getVibrationStrong();
                     }else if (vibrationType.equals("heart")){
                         getVibrationHeart();
+                    }else {
+                        getVibrationDefault();
                     }
-                }else {
-                    getVibrationDefault();
+
                 }
 
             }
@@ -415,19 +421,11 @@ public class MainFragment extends Fragment  {
             DataLocalManager.setSound(true);
 
             if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(requireActivity(), sound.getMusic());
+                mediaPlayer = MediaPlayer.create(requireContext(), sound.getMusic());
                 if (mediaPlayer != null) {
                     mediaPlayer.start();
                     mediaPlayer.setLooping(true);
-                    DataLocalManager.setSoundAlarm(sound);
-
-                } else {
-                    mediaPlayer = MediaPlayer.create(requireActivity(), R.raw.dogbarkwa);
-                    mediaPlayer.start();
-                    mediaPlayer.setLooping(true);
-//                    Toast.makeText(requireActivity(), "Can not play music", Toast.LENGTH_SHORT).show();
                 }
-
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {

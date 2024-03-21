@@ -35,7 +35,6 @@ import java.util.List;
 
 public class AlarmSoundMain extends AppCompatActivity {
 
-    private static final String SOUND_KEY = "SOUND_KEY";
     RecyclerView rcl,rclTime;
     SoundAlarmAdapter adapter;
     TimeAdapter timeAdapter;
@@ -172,10 +171,9 @@ public class AlarmSoundMain extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     checkFlash = true;
-                    flashOnl();
+
                 }else {
                     checkFlash = false;
-                    flashOff();
                 }
             }
         });
@@ -186,16 +184,9 @@ public class AlarmSoundMain extends AppCompatActivity {
         changeSeekBar();
     }
 
-    private void flashOff() {
-    }
 
-    private void flashOnl() {
-    }
-
-
-    //
     private void sendMainFragment() {
-
+        DataLocalManager.setMusic(sound.getMusic());
         Intent intent = new Intent(AlarmSoundMain.this, MainActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("SOUND",sound);
@@ -331,8 +322,5 @@ public class AlarmSoundMain extends AppCompatActivity {
     }
 
 
-    private void setTimeSound(Time time){
-
-    }
 
 }
