@@ -114,13 +114,15 @@
             />
 
         <RadioGroup
+            android:id="@+id/radioGroup_flashLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_below="@+id/icon_flashlight_mode"
             android:layout_margin="20dp">
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <RadioButton
+                android:id="@+id/btn_default_flash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/defaults"
@@ -128,14 +130,18 @@
                 android:padding="10dp"
                 app:buttonTint="@color/blue"
                 />
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <RadioButton
+                android:id="@+id/btn_disco_flash"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/disco_mode"
                 android:textSize="16sp"
                 android:padding="10dp"
                 app:buttonTint="@color/blue"/>
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <RadioButton
+                android:id="@+id/btn_sos_flash"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sos"
@@ -170,6 +176,7 @@
             />
 
         <RadioGroup
+            android:id="@+id/radioGroup_vibration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -177,21 +184,27 @@
             android:layout_margin="20dp"
             >
 
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <RadioButton
+                android:id="@+id/btn_default_vibration"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/defaults"
                 android:textSize="16sp"
                 android:padding="10dp"
                 app:buttonTint="@color/blue"/>
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <RadioButton
+                android:id="@+id/btn_strong_vibration"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/strong_vib"
                 android:textSize="16sp"
                 android:padding="10dp"
                 app:buttonTint="@color/blue"/>
-            <com.google.android.material.radiobutton.MaterialRadioButton
+            <RadioButton
+                android:id="@+id/btn_heartbeat_vibration"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/heartbeat"

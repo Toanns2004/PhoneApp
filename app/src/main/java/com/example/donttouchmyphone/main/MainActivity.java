@@ -16,8 +16,12 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.MutableContextWrapper;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,10 +41,12 @@ import com.example.donttouchmyphone.language.MainLanguage;
 import com.example.donttouchmyphone.main.broadcast.BroadcastReceiverApp;
 import com.example.donttouchmyphone.main.fragment.MainFragment;
 import com.example.donttouchmyphone.main.fragment.SettingsFragment;
+import com.example.donttouchmyphone.sev.DataLocalManager;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -141,6 +147,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         onBackPress();
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        MutableContextWrapper contextWrapper = new MutableContextWrapper(newBase);
+        updateLanguage(contextWrapper);
+
+        super.attachBaseContext(contextWrapper);
+    }
+
+    private void updateLanguage(ContextWrapper contextWrapper) {
+        String languageCode = DataLocalManager.getLanguageCode(); // Lấy mã ngôn ngữ từ SharedPreferences hoặc nơi lưu trữ khác
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        Configuration config = new Configuration();
+        config.locale = locale;
+
+        Resources resources = contextWrapper.getResources();
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
     private void registerNetworkBroadcast() {

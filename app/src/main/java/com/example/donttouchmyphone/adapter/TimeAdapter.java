@@ -1,6 +1,7 @@
 package com.example.donttouchmyphone.adapter;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,9 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
     List<Time> timeList;
     IClickTime iClickTime;
 
-//    Time t = DataLocalManager.getTimeValue();
+
+    int timePrevious = DataLocalManager.getTimeValue();
+
 
 
     public TimeAdapter(List<Time> timeList, IClickTime iClickTime) {
@@ -43,32 +46,24 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
        Time time = timeList.get(position);
 
        holder.textView.setText(time.getName());
-       if (time.isCheck()){
-           holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration);
-       }else {
-           holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration_uncheck);
 
-       }
+        if (time.getTime() == timePrevious ){
+            holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration);
+        }else {
+            holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration_uncheck);
 
-//        if (time == t){
-//            holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration);
-//        }else {
-//            holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration_uncheck);
-//
-//        }
-
+        }
        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               iClickTime.getTime(time);
                for (Time i: timeList) {
                    i.setCheck(false);
                }
                time.setCheck(true);
-               holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration);
+
                notifyDataSetChanged();
-               iClickTime.getTime(time);
-//               DataLocalManager.setTime(time.isCheck());
-               DataLocalManager.setTimeValue(time);
+
            }
        });
     }

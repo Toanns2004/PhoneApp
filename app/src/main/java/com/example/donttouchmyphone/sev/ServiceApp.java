@@ -59,15 +59,15 @@ public class ServiceApp extends Service implements SensorEventListener {
     }
 
     private void senNotification() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), getNotificationId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), getNotificationId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, ApplicationApp.CHANNEL_ID)
                 .setContentText(getString(R.string.notification))
                 .setSmallIcon(R.drawable.disconnect_wifi)
-                .setAutoCancel(true)
-                .setContentIntent(pendingIntent);
+                .setAutoCancel(true);
+//                .setContentIntent(pendingIntent);
 
         Notification notification = builder.build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -83,7 +83,7 @@ public class ServiceApp extends Service implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float a = 11f;
+        final float a = 11f;
 
         float x = event.values[0];
         float y = event.values[1];

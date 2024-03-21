@@ -45,7 +45,7 @@ public class SharedPreferencesApp {
 
     public int getInt(String key){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES_APP,Context.MODE_PRIVATE);
-        return sharedPreferences.getInt(key,0);
+        return sharedPreferences.getInt(key,15000);
     }
 
 }

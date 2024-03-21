@@ -4,10 +4,13 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.AUDIO_SERVICE;
 import static android.content.Context.VIBRATOR_SERVICE;
 
+
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -48,6 +51,7 @@ public class MainFragment extends Fragment  {
     RecyclerView rcl;
     SoundAdapter adapter;
     List<Sound> list;
+    Sound sound ;
     RelativeLayout rlt;
     TextView txtActive;
     View view;
@@ -57,17 +61,18 @@ public class MainFragment extends Fragment  {
     private boolean changeDevice;
     LottieAnimationView animationView;
     private MediaPlayer mediaPlayer;
-    private int music = R.raw.dogbark;
-    private int time = 1500;
+    private int time ;
     AudioManager audioManager;
     Vibrator vibrator;
-    Boolean checkSound, checkVibration,checkFlash ;
-
+    boolean checkSound, checkVibration,checkFlash ;
+    boolean isFlashOn ;
+    private Handler handler = new Handler();
 
     IClickItem iClickItem = new IClickItem() {
         @Override
         public void getItem(Sound sound) {
             sendAlarmSound(sound);
+
         }
     };
 
@@ -82,12 +87,16 @@ public class MainFragment extends Fragment  {
                             bundle = intent.getBundleExtra("sendMainFragment");
                         }
                         if (bundle!=null){
-                            music = bundle.getInt("music");
+                            sound = (Sound) bundle.getSerializable("SOUND");
                             time = bundle.getInt("time");
                             checkSound = bundle.getBoolean("sound_alarm");
                             checkVibration = bundle.getBoolean("vibration_alarm");
                             checkFlash = bundle.getBoolean("flash_alarm");
-
+                            DataLocalManager.setSoundAlarm(sound);
+                            DataLocalManager.setTimeValue(time);
+                            DataLocalManager.setSound(checkSound);
+                            DataLocalManager.setVibration(checkVibration);
+                            DataLocalManager.setFlashLight(checkFlash);
                         }
                     }
                 }
@@ -108,11 +117,21 @@ public class MainFragment extends Fragment  {
         rcl.setLayoutManager(new GridLayoutManager(requireActivity(),2));
         rcl.setAdapter(adapter);
 
+        if (!DataLocalManager.getFirstInstalled()){
+            sound = list.get(0);
+            time = 15000;
+            checkSound =true;
+            DataLocalManager.setTimeValue(time);
+            DataLocalManager.setFirstInstalled(true);
+        }else {
+            sound =  DataLocalManager.getSoundAlarm();
+            checkSound = DataLocalManager.getSound();
+            checkVibration = DataLocalManager.getVibration();
+            time= DataLocalManager.getTimeValue();
+            checkFlash = DataLocalManager.getFlashLight();
+        }
 
-        checkSound = DataLocalManager.getSound();
-//
-        checkVibration = DataLocalManager.getVibration();
-//        time= DataLocalManager.getTimeValue();
+
 
         vibrator = (Vibrator) requireActivity().getSystemService(VIBRATOR_SERVICE);
         audioManager = (AudioManager) requireActivity().getSystemService(AUDIO_SERVICE);
@@ -126,12 +145,7 @@ public class MainFragment extends Fragment  {
                     clickServiceApp();
                 }else {
                     clickStopServiceApp();
-                    if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                        mediaPlayer.release();
-                        mediaPlayer = null;
-                        vibrator.cancel();
-                    }
+
                 }
 
             }
@@ -151,6 +165,7 @@ public class MainFragment extends Fragment  {
         return view;
     }
 
+
     private void clickStopServiceApp() {
         Intent intent = new Intent(requireActivity(), ServiceApp.class);
         requireActivity().stopService(intent);
@@ -160,6 +175,8 @@ public class MainFragment extends Fragment  {
             mediaPlayer = null;
         }
         vibrator.cancel();
+        stopFlashing();
+        OffFlash();
         service = false;
         txtActive.setText(R.string.tap_to_active);
         int color = getResources().getColor(R.color.blue);
@@ -180,7 +197,7 @@ public class MainFragment extends Fragment  {
     private void anhXa(){
         rcl = view.findViewById(R.id.recyclerView_alarm_sound);
         list = new ArrayList<>();
-        list.add(new Sound(R.drawable.dog, R.string.dog,R.raw.dogbark));
+        list.add(new Sound(R.drawable.dog, R.string.dog,R.raw.dogbarkwa));
         list.add(new Sound(R.drawable.cat, R.string.cat,R.raw.catangry));
         list.add(new Sound(R.drawable.police, R.string.police,R.raw.police));
         list.add(new Sound(R.drawable.doorbell, R.string.doorbell,R.raw.doorbell));
@@ -219,38 +236,15 @@ public class MainFragment extends Fragment  {
                     changeDevice = resultData.getBoolean("changeDevice");
 
                     if (changeDevice){
+
                         animationView.setRepeatCount(LottieDrawable.INFINITE);
                         animationView.playAnimation();
-                        if (checkVibration){
-                            if (vibrator.hasVibrator()){
-                                getVibration();
-                            }
-                        }
-                        if (checkSound) {
-                            if (mediaPlayer == null) {
 
-                                mediaPlayer = MediaPlayer.create(requireActivity(), music);
-                                mediaPlayer.start();
-                                mediaPlayer.setLooping(true);
+                        isVibrationActive();
 
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                                            mediaPlayer.stop();
-                                            mediaPlayer.release();
-                                            mediaPlayer = null;
-                                        }
-                                    }
-                                }, time);
+                        isFlashLightActive();
 
-                            } else if (mediaPlayer.isPlaying()) { // Kiểm tra mediaPlayer đang phát nhạc hay không
-                                mediaPlayer.stop();
-                                mediaPlayer.release();
-                                mediaPlayer = null;
-                            }
-                        }
-
+                        isSoundActive();
                     }
                 }
             }
@@ -258,15 +252,204 @@ public class MainFragment extends Fragment  {
 
     }
 
-    private void getVibration(){
-        // Tính thời gian của mỗi chu kỳ rung
-        long vibrationDuration = time;
-        long pauseDuration = 0;
-        long[] pattern = {0, vibrationDuration, pauseDuration};
-        VibrationEffect effect = VibrationEffect.createWaveform(pattern, -1); // -1 để lặp vô hạn
-        vibrator.vibrate(effect);
+    private void getVibrationDefault(){
+        if (vibrator.hasVibrator()) {
+            VibrationEffect effect = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                effect = VibrationEffect.createOneShot(time, VibrationEffect.EFFECT_DOUBLE_CLICK );
+            }
+            vibrator.vibrate(effect);
+        }
+
+    }
+
+    private void getVibrationStrong(){
+        if (vibrator.hasVibrator()) {
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                vibrator.vibrate(VibrationEffect.createOneShot(time, VibrationEffect.CONTENTS_FILE_DESCRIPTOR ));
+            }else {
+                long[] pattern = {0, 200,10,500};
+                vibrator.vibrate(pattern, -1);
+            }
+
+        }
+
+    }
+
+    private void getVibrationHeart(){
+        if (vibrator.hasVibrator()) {
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                vibrator.vibrate(VibrationEffect.createOneShot(time, VibrationEffect.CONTENTS_FILE_DESCRIPTOR ));
+            }else {
+                long[] pattern = {0, 200,300,500};
+                vibrator.vibrate(pattern, -1);
+            }
+
+        }
 
     }
 
 
+    private void OnlFlash(){
+        try {
+            CameraManager cameraManager = (CameraManager) requireActivity().getSystemService(Context.CAMERA_SERVICE);
+            String cameraId = cameraManager.getCameraIdList()[0];
+            cameraManager.setTorchMode(cameraId, true);
+            isFlashOn = true;
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void OffFlash(){
+        try {
+            CameraManager cameraManager = (CameraManager) requireActivity().getSystemService(Context.CAMERA_SERVICE);
+            String cameraId = cameraManager.getCameraIdList()[0];
+            cameraManager.setTorchMode(cameraId, false);
+            isFlashOn = false;
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Runnable flashDefault = new Runnable() {
+        @Override
+        public void run() {
+            if (!isFlashOn){
+                OnlFlash();
+                isFlashOn = true;
+            }else {
+                OffFlash();
+                isFlashOn = false;
+            }
+            handler.postDelayed(this, 1000);
+        }
+    };
+
+    private Runnable flashDisco = new Runnable() {
+        @Override
+        public void run() {
+            if (!isFlashOn){
+                OnlFlash();
+                isFlashOn = true;
+            }else {
+                OffFlash();
+                isFlashOn = false;
+            }
+            handler.postDelayed(this, 600);
+        }
+    };
+
+    public Runnable flashSos = new Runnable() {
+        @Override
+        public void run() {
+            if (!isFlashOn){
+                OnlFlash();
+                isFlashOn = true;
+            }else {
+                OffFlash();
+                isFlashOn = false;
+            }
+            handler.postDelayed(this, 300);
+        }
+    };
+
+
+    private void stopFlashing() {
+        handler.removeCallbacksAndMessages(null);
+    }
+
+    private void isFlashLightActive(){
+        if (checkFlash){
+            DataLocalManager.setFlashLight(true);
+            String flashType = DataLocalManager.getRadioFlash();
+            if (flashType !=null){
+                if (flashType.equals("default")){
+                    handler.post(flashDefault);
+                }else if (flashType.equals("disco")){
+                    handler.post(flashDisco);
+                } else if (flashType.equals("sos")) {
+                    handler.post(flashSos);
+                }
+            }else {
+                handler.post(flashDefault);
+            }
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    stopFlashing();
+                    OffFlash();
+                }
+            },time);
+        }
+
+    }
+
+    private void isVibrationActive(){
+        if (checkVibration){
+            DataLocalManager.setVibration(true);
+            if (vibrator.hasVibrator()){
+                String vibrationType = DataLocalManager.getRadioVibration();
+                if (vibrationType!=null){
+                    if (vibrationType.equals("default")){
+                        getVibrationDefault();
+                    } else if (vibrationType.equals("strong")) {
+                        getVibrationStrong();
+                    }else if (vibrationType.equals("heart")){
+                        getVibrationHeart();
+                    }
+                }else {
+                    getVibrationDefault();
+                }
+
+            }
+        }
+
+    }
+
+    private void isSoundActive(){
+        if (checkSound) {
+            DataLocalManager.setSound(true);
+
+            if (mediaPlayer == null) {
+                mediaPlayer = MediaPlayer.create(requireActivity(), sound.getMusic());
+                if (mediaPlayer != null) {
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+                    DataLocalManager.setSoundAlarm(sound);
+
+                } else {
+                    mediaPlayer = MediaPlayer.create(requireActivity(), R.raw.dogbarkwa);
+                    mediaPlayer.start();
+                    mediaPlayer.setLooping(true);
+//                    Toast.makeText(requireActivity(), "Can not play music", Toast.LENGTH_SHORT).show();
+                }
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                            mediaPlayer.stop();
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
+                    }
+                }, time);
+
+            } else if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        clickStopServiceApp();
+    }
 }

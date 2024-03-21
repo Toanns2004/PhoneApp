@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
@@ -53,7 +52,7 @@ public class AlarmSoundMain extends AppCompatActivity {
     Sound sound;
     SharedPreferences sharedPreferences;
 
-    Time time;
+    int time;
 
     SeekBar seekBar;
 
@@ -66,20 +65,21 @@ public class AlarmSoundMain extends AppCompatActivity {
         setContentView(R.layout.activity_alarm_sound_main);
         anhXa();
 
-
+        getDataFragmentMain();
         adapter = new SoundAlarmAdapter(list,iClickTime);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,RecyclerView.HORIZONTAL,false);
         rcl.setLayoutManager(layoutManager);
         rcl.setAdapter(adapter);
         listTime();
 
-        getDataFragmentMain();
+
+
 
 
         time = DataLocalManager.getTimeValue();
-
-
-        mediaPlayer = MediaPlayer.create(AlarmSoundMain.this,sound.getMusic());
+        if (mediaPlayer == null){
+            mediaPlayer = MediaPlayer.create(AlarmSoundMain.this,sound.getMusic());
+        }
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
 
@@ -132,14 +132,12 @@ public class AlarmSoundMain extends AppCompatActivity {
                     seekBar.setEnabled(true);
 //                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,audioManager.getStreamVolume(currentVolume),0);
 
-                    DataLocalManager.setSound(true);
 
                 } else {
                     checkSound = false;
                     seekBar.setEnabled(false);
 //                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,0,0);
 
-                    DataLocalManager.setSound(false);
                 }
             }
         });
@@ -155,11 +153,9 @@ public class AlarmSoundMain extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     checkVibration = true;
-                    DataLocalManager.setVibration(true);
 
                 }else {
                     checkVibration = false;
-                    DataLocalManager.setVibration(false);
 
                 }
             }
@@ -176,12 +172,10 @@ public class AlarmSoundMain extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked){
                     checkFlash = true;
-                    DataLocalManager.setFlashLight(true);
-
+                    flashOnl();
                 }else {
                     checkFlash = false;
-                    DataLocalManager.setFlashLight(false);
-
+                    flashOff();
                 }
             }
         });
@@ -192,16 +186,21 @@ public class AlarmSoundMain extends AppCompatActivity {
         changeSeekBar();
     }
 
+    private void flashOff() {
+    }
 
+    private void flashOnl() {
+    }
 
 
     //
     private void sendMainFragment() {
-        DataLocalManager.setTimeValue(time);
+
         Intent intent = new Intent(AlarmSoundMain.this, MainActivity.class);
         Bundle bundle = new Bundle();
+        bundle.putSerializable("SOUND",sound);
         bundle.putInt("music",sound.getMusic());
-        bundle.putInt("time",time.getTime());
+        bundle.putInt("time",time);
         bundle.putBoolean("sound_alarm",checkSound);
         bundle.putBoolean("vibration_alarm",checkVibration);
         bundle.putBoolean("flash_alarm",checkFlash);
@@ -217,7 +216,6 @@ public class AlarmSoundMain extends AppCompatActivity {
         if (bundle!=null){
             sound = (Sound) bundle.getSerializable("sound_main");
             txt.setText(sound.getName());
-
         }
     }
 
@@ -237,8 +235,10 @@ public class AlarmSoundMain extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.stop();
-        mediaPlayer.release();
+        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
     }
 
     private void anhXa(){
@@ -253,7 +253,7 @@ public class AlarmSoundMain extends AppCompatActivity {
         btnApply = findViewById(R.id.button_apply_alarmSound);
         seekBar = findViewById(R.id.seekbarProgress_alarmSound);
         list = new ArrayList<>();
-        list.add(new Sound(R.drawable.dog, R.string.dog,R.raw.dogbark));
+        list.add(new Sound(R.drawable.dog, R.string.dog,R.raw.dogbarkwa));
         list.add(new Sound(R.drawable.cat, R.string.cat,R.raw.catangry));
         list.add(new Sound(R.drawable.police, R.string.police,R.raw.police));
         list.add(new Sound(R.drawable.doorbell, R.string.doorbell,R.raw.doorbell));
@@ -280,7 +280,7 @@ public class AlarmSoundMain extends AppCompatActivity {
     IClickTime iClickTime = new IClickTime() {
         @Override
         public void getTime(Time t) {
-            time = t;
+            time = t.getTime();
         }
 
         @Override

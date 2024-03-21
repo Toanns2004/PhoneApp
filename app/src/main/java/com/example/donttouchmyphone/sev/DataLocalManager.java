@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.donttouchmyphone.model.Language;
+import com.example.donttouchmyphone.model.Sound;
 import com.example.donttouchmyphone.model.Time;
 import com.google.gson.Gson;
 
@@ -15,8 +16,13 @@ public class DataLocalManager {
     private static final String CHECK_VIBRATION = "CHECK_VIBRATION";
     private static final String CHECK_FLASH = "CHECK_FLASH";
     private static final String KEY_LANGUAGE ="language";
-    private static final String CHECK_LANGUAGE = "CHECK_LANGUAGE";
-    private static final String CHECK_INTERNET = "CHECK_INTERNET";
+    private static final String CHECK_ALARM_SOUND = "CHECK_ALARM_SOUND";
+
+    private static final String GROUP_RADIO_FLASHLIGHT = "GROUP_RADIO_FLASHLIGHT";
+    private static final String GROUP_RADIO_VIBRATION = "GROUP_RADIO_VIBRATION";
+    private static final String NAME_RADIO_FLASHLIGHT = "NAME_RADIO_FLASHLIGHT";
+    private static final String STRING_RADIO_VIBRATION = "STRING_RADIO_VIBRATION";
+    private static final String FIRST_INSTALLED = "FIRST_INSTALLED";
 
     private static DataLocalManager dataLocalManager;
     private SharedPreferencesApp preferencesApp;
@@ -33,6 +39,13 @@ public class DataLocalManager {
         return dataLocalManager;
     }
 
+    public static void setFirstInstalled(boolean value){
+        DataLocalManager.getDataLocalManager().preferencesApp.setBoolean(FIRST_INSTALLED,value);
+    }
+
+    public static boolean getFirstInstalled(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(FIRST_INSTALLED);
+    }
 
     public static void setSound(boolean sound){
         DataLocalManager.getDataLocalManager().preferencesApp.setBoolean(CHECK_SOUND,sound);
@@ -42,26 +55,21 @@ public class DataLocalManager {
         return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(CHECK_SOUND);
     }
 
-    public static void setTimeValue(Time time){
-        Gson gson =  new Gson();
-        String timJson  = gson.toJson(time);
-        DataLocalManager.getDataLocalManager().preferencesApp.setString(TIME_KEY_VALUE,timJson);
+    public static void setTimeValue(int time){
+        DataLocalManager.getDataLocalManager().preferencesApp.setInt(TIME_KEY_VALUE,time);
     }
 
-    public static Time getTimeValue(){
-        String timeJson = DataLocalManager.getDataLocalManager().preferencesApp.getString(TIME_KEY_VALUE);
-        Gson gson = new Gson();
-        Time time = gson.fromJson(timeJson, Time.class);
-        return time;
+    public static int getTimeValue(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getInt(TIME_KEY_VALUE);
     }
 
-    public static void setTime(boolean time){
-        DataLocalManager.getDataLocalManager().preferencesApp.setBoolean(TIME_KEY,time);
-    }
-
-    public static boolean getTime(){
-        return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(TIME_KEY);
-    }
+//    public static void setTime(boolean time){
+//        DataLocalManager.getDataLocalManager().preferencesApp.setBoolean(TIME_KEY,time);
+//    }
+//
+//    public static boolean getTime(){
+//        return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(TIME_KEY);
+//    }
 
 
 
@@ -88,23 +96,53 @@ public class DataLocalManager {
     public static void saveLanguageCode(String languageCode){
         DataLocalManager.getDataLocalManager().preferencesApp.setString(KEY_LANGUAGE,languageCode);
     }
-    public static void setLanguage(Language language){
+    public static void setSoundAlarm(Sound sound){
         Gson gson = new Gson();
-        String languageJson = gson.toJson(language);
-        DataLocalManager.getDataLocalManager().preferencesApp.setString(CHECK_LANGUAGE,languageJson);
+        String soundJson = gson.toJson(sound);
+        DataLocalManager.getDataLocalManager().preferencesApp.setString(CHECK_ALARM_SOUND,soundJson);
     }
 
-    public static String getLanguage(){
-        return DataLocalManager.getDataLocalManager().preferencesApp.getString(CHECK_LANGUAGE);
+    public static Sound getSoundAlarm(){
+        String soundJson = DataLocalManager.getDataLocalManager().preferencesApp.getString(CHECK_ALARM_SOUND);
+        Gson gson = new Gson();
+        Sound sound = gson.fromJson(soundJson,Sound.class);
+        return sound;
     }
 
 
-    public static void setCheckInternet(boolean internet){
-        DataLocalManager.getDataLocalManager().preferencesApp.setBoolean(CHECK_INTERNET,internet);
+    public static void setIdGroupRadioFlash(int value){
+        DataLocalManager.getDataLocalManager().preferencesApp.setInt(GROUP_RADIO_FLASHLIGHT,value);
     }
 
-    public static boolean getCheckInternet(){
-        return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(CHECK_INTERNET);
+    public static int getIdGroupRadioFlash(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getInt(GROUP_RADIO_FLASHLIGHT);
     }
+
+    public static void setRadioFlash(String value){
+        DataLocalManager.getDataLocalManager().preferencesApp.setString(NAME_RADIO_FLASHLIGHT,value);
+    }
+
+    public static String getRadioFlash(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getString(NAME_RADIO_FLASHLIGHT);
+    }
+
+
+
+    public static void setIdGroupRadioVibration(int value){
+        DataLocalManager.getDataLocalManager().preferencesApp.setInt(GROUP_RADIO_VIBRATION,value);
+    }
+
+    public static int getIdGroupRadioVibration(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getInt(GROUP_RADIO_VIBRATION);
+    }
+    public static void setRadioVibration(String value){
+        DataLocalManager.getDataLocalManager().preferencesApp.setString(STRING_RADIO_VIBRATION,value);
+
+    }
+
+    public static String getRadioVibration(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getString(STRING_RADIO_VIBRATION);
+    }
+
 
 }

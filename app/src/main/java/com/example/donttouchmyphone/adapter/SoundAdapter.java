@@ -1,5 +1,6 @@
 package com.example.donttouchmyphone.adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donttouchmyphone.R;
 import com.example.donttouchmyphone.main.iface.IClickItem;
 import com.example.donttouchmyphone.model.Sound;
+import com.example.donttouchmyphone.sev.DataLocalManager;
 
 import java.util.List;
 
@@ -40,15 +42,18 @@ public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHol
 
         holder.imageView.setImageResource(sound.getImage());
         holder.textView.setText(sound.getName());
+        Log.e("sound",""+DataLocalManager.getSoundAlarm());
+        Log.e("sound",sound+"");
+        if (sound == DataLocalManager.getSoundAlarm()){
 
-
+            holder.rcl.setBackgroundResource(R.drawable.custom_alarm_sound_click);
+        }
         holder.rcl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sound.setChoose(true);
                 iClickItem.getItem(sound);
 
-                notifyDataSetChanged();
             }
         });
     }

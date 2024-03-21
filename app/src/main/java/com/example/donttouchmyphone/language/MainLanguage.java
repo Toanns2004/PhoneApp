@@ -40,7 +40,6 @@ public class MainLanguage extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     setLanguageObject(language);
-//                    DataLocalManager.setLanguage();
                     Intent intent;
                     if (KEY_PREVIOUS_ACTIVITY.equals(previousActivityName)){
                         intent = new Intent(MainLanguage.this, MainActivity.class);
@@ -109,22 +108,24 @@ public class MainLanguage extends AppCompatActivity {
 
 
     private void setLanguage(String languageCode) {
-        Resources resources = getResources();
+        Resources resources = this.getResources();
         Configuration configuration = resources.getConfiguration();
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);
         configuration.setLocale(locale);
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        DataLocalManager.saveLanguageCode(languageCode);
     }
 
 
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences sharedPreferences = getSharedPreferences("save",MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("lang",languageCode);
-        editor.apply();
+//        SharedPreferences sharedPreferences = getSharedPreferences("save",MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("lang",languageCode);
+//        editor.apply();
+
     }
 
 
