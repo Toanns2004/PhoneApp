@@ -24,7 +24,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
     IClickTime iClickTime;
 
 
-    int timePrevious = DataLocalManager.getTimeValue();
+
 
 
 
@@ -46,7 +46,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
        Time time = timeList.get(position);
 
        holder.textView.setText(time.getName());
-
+        int timePrevious = DataLocalManager.getTimeValue();
         if (time.getTime() == timePrevious ){
             holder.relativeLayout.setBackgroundResource(R.drawable.custom_time_duration);
         }else {
@@ -61,6 +61,7 @@ public class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.TimeViewHolder
                    i.setCheck(false);
                }
                time.setCheck(true);
+               DataLocalManager.setTimeValue(time.getTime());
 
                notifyDataSetChanged();
 
