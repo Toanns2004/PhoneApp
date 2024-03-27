@@ -34,6 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dialog_title_wifi"
+            android:fontFamily="@font/poppins_medium"
+
             android:layout_gravity="center"
             android:layout_margin="20dp"
             android:textSize="16sp"
@@ -48,6 +50,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+            android:fontFamily="@font/poppins_regular"
 
             android:textSize="16sp"
             android:textColor="@color/black"/>
@@ -64,6 +67,8 @@
                 android:layout_centerInParent="true"
                 android:padding="15dp"
                 android:text="@string/btn_dialog_wifi"
+                android:fontFamily="@font/poppins_medium"
+
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".alarmsound.AlarmSoundMain">
+    tools:context=".views.activities.alarmsound.AlarmSoundActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,9 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alarm_sound"
-            android:textSize="20sp"
+            android:fontFamily="@font/poppins_medium"
+            android:textSize="18sp"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:layout_toEndOf="@+id/image_button_back_alarmSound"
             android:layout_marginStart="5dp"
             android:layout_centerVertical="true"
@@ -44,7 +44,7 @@
             android:textSize="18dp"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="5dp"
             />
 
     </RelativeLayout>

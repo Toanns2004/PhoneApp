@@ -24,8 +24,10 @@
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/image_sound"
         android:text="@string/text_name_sound"
+        android:fontFamily="@font/poppins_regular"
+
         android:textColor="@color/black"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
 
     <ImageView
         android:id="@+id/icon_next_sound"

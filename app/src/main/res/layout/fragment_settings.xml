@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp"
-    tools:context=".main.fragment.SettingsFragment">
+    tools:context=".views.fragments.SettingsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -25,6 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sensitivity"
+            android:fontFamily="@font/poppins_medium"
+
             android:layout_toEndOf="@+id/icon_sensitivity"
             android:textSize="17sp"
             android:textColor="@color/black"
@@ -33,6 +35,7 @@
             />
 
         <SeekBar
+            android:id="@+id/seekbar_settings"
             android:layout_width="280dp"
             android:layout_height="30dp"
             android:layout_below="@+id/icon_sensitivity"
@@ -60,6 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/extension"
+            android:fontFamily="@font/poppins_medium"
+
             android:layout_toEndOf="@+id/icon_extension"
             android:textSize="16sp"
             android:textColor="@color/black"
@@ -81,6 +86,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/light_up"
+            android:fontFamily="@font/poppins_regular"
+
             android:textSize="13sp"
             android:layout_below="@+id/icon_extension"
             android:layout_toRightOf="@+id/icon_extension"
@@ -106,6 +113,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/flash_mode"
+            android:fontFamily="@font/poppins_medium"
+
             android:layout_toEndOf="@+id/icon_flashlight_mode"
             android:textSize="16sp"
             android:textColor="@color/black"
@@ -117,37 +126,47 @@
             android:id="@+id/radioGroup_flashLight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_below="@+id/icon_flashlight_mode"
-            android:layout_margin="20dp">
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
 
             <RadioButton
                 android:id="@+id/btn_default_flash"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="10dp"
+
                 android:text="@string/defaults"
                 android:textSize="16sp"
-                android:padding="10dp"
-                app:buttonTint="@color/blue"
-                />
+                app:buttonTint="@color/blue" />
+
             <RadioButton
                 android:id="@+id/btn_disco_flash"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="10dp"
+
                 android:text="@string/disco_mode"
                 android:textSize="16sp"
-                android:padding="10dp"
-                app:buttonTint="@color/blue"/>
+                app:buttonTint="@color/blue" />
+
             <RadioButton
                 android:id="@+id/btn_sos_flash"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="10dp"
+
                 android:text="@string/sos"
                 android:textSize="16sp"
-                android:padding="10dp"
-                app:buttonTint="@color/blue"/>
+                app:buttonTint="@color/blue" />
         </RadioGroup>
 
     </RelativeLayout>
@@ -168,6 +187,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/vibrate"
+            android:fontFamily="@font/poppins_medium"
             android:layout_toEndOf="@+id/icon_vibrate_mode"
             android:textSize="16sp"
             android:textColor="@color/black"
@@ -179,38 +199,48 @@
             android:id="@+id/radioGroup_vibration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_below="@+id/icon_vibrate_mode"
-            android:layout_margin="20dp"
-            >
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
 
             <RadioButton
                 android:id="@+id/btn_default_vibration"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="10dp"
+
                 android:text="@string/defaults"
                 android:textSize="16sp"
-                android:padding="10dp"
-                app:buttonTint="@color/blue"/>
+                app:buttonTint="@color/blue" />
+
             <RadioButton
                 android:id="@+id/btn_strong_vibration"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="10dp"
+
                 android:text="@string/strong_vib"
                 android:textSize="16sp"
-                android:padding="10dp"
-                app:buttonTint="@color/blue"/>
+                app:buttonTint="@color/blue" />
+
             <RadioButton
                 android:id="@+id/btn_heartbeat_vibration"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:padding="10dp"
+
                 android:text="@string/heartbeat"
                 android:textSize="16sp"
-                android:padding="10dp"
-                app:buttonTint="@color/blue"/>
+                app:buttonTint="@color/blue" />
 
 
         </RadioGroup>

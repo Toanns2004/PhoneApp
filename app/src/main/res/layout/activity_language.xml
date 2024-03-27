@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".language.MainLanguage">
+    tools:context=".views.activities.language.MainLanguageActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,6 +17,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/language"
+            android:fontFamily="@font/poppins_medium"
+
             android:textColor="@color/black"
             android:textSize="18sp"
             android:layout_centerVertical="true"
@@ -26,6 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:text="OK"
+            android:fontFamily="@font/poppins_medium"
+            android:layout_marginEnd="20dp"
             android:background="@drawable/custom_btn_ok"
             android:textColor="@color/white"
             android:layout_centerVertical="true"
