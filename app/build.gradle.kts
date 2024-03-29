@@ -42,5 +42,6 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.10.1")
     implementation("com.airbnb.android:lottie:3.4.0")
+    implementation ("me.relex:circleindicator:2.1.6")
 
 }

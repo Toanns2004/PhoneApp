@@ -6,6 +6,7 @@
         android:name="android.hardware.camera"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -55,7 +56,7 @@
             android:exported="false" />
         <activity
             android:name=".views.activities.intro.IntroActivity"
-            android:exported="false"></activity>
+            android:exported="false"/>
         <activity
             android:name=".views.activities.permission.PermissionMain"
             android:exported="false" />
@@ -77,6 +78,3 @@
     </application>
 
 </manifest>
-<!--    android:excludeFromRecents="true"-->
-<!--    android:launchMode="singleTask"-->
-<!--    android:taskAffinity=""-->

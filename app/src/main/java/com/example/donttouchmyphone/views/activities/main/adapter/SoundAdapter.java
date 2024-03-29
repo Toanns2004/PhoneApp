@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.donttouchmyphone.R;
-import com.example.donttouchmyphone.views.interfaces.IClickItem;
+import com.example.donttouchmyphone.views.interfaces.IClickItemSound;
 import com.example.donttouchmyphone.models.Sound;
 import com.example.donttouchmyphone.services.DataLocalManager;
 
@@ -20,11 +20,11 @@ import java.util.List;
 
 public class SoundAdapter extends RecyclerView.Adapter<SoundAdapter.SoundViewHolder>{
     List<Sound> soundList;
-    IClickItem iClickItem;
+    IClickItemSound iClickItem;
 
     private int textColorClick = Color.WHITE;
     private int textColorUnClick = Color.BLACK;
-    public SoundAdapter(List<Sound> soundList,IClickItem iClickItem) {
+    public SoundAdapter(List<Sound> soundList, IClickItemSound iClickItem) {
         this.soundList = soundList;
         this.iClickItem =iClickItem;
     }

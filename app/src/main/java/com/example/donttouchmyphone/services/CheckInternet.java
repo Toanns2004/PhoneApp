@@ -16,11 +16,13 @@ public class CheckInternet extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())){
             if (isNetworkAvailable(context)){
-                sendMainActivity(context,true);
+//                sendMainActivity(context,true);
 //                Toast.makeText(context, "có wiffi", Toast.LENGTH_SHORT).show();
+                DataLocalManager.setInternet(true);
             }else {
                 sendMainActivity(context,false);
 //                Toast.makeText(context, "Không có wiffi", Toast.LENGTH_SHORT).show();
+                DataLocalManager.setInternet(false);
             }
         }
     }

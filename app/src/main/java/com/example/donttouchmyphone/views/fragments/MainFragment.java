@@ -1,17 +1,14 @@
 package com.example.donttouchmyphone.views.fragments;
 
 import static android.app.Activity.RESULT_OK;
-import static android.content.Context.AUDIO_SERVICE;
-import static android.content.Context.VIBRATOR_SERVICE;
 
 
+import static com.example.donttouchmyphone.services.ServiceApp.RECEIVER_CODE;
+
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.camera2.CameraAccessException;
-import android.hardware.camera2.CameraManager;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.os.Build;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -19,13 +16,13 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Handler;
 import android.os.ResultReceiver;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +37,7 @@ import com.example.donttouchmyphone.views.activities.alarmsound.AlarmSoundActivi
 import com.example.donttouchmyphone.views.activities.how.HowToActivity;
 import com.example.donttouchmyphone.models.Sound;
 import com.example.donttouchmyphone.views.activities.main.adapter.SoundAdapter;
-import com.example.donttouchmyphone.views.interfaces.IClickItem;
+import com.example.donttouchmyphone.views.interfaces.IClickItemSound;
 import com.example.donttouchmyphone.services.DataLocalManager;
 import com.example.donttouchmyphone.services.ServiceApp;
 
@@ -49,32 +46,42 @@ import java.util.List;
 
 
 public class MainFragment extends Fragment  {
-    RecyclerView rcl;
-    SoundAdapter adapter;
-    List<Sound> list;
-    Sound sound ;
-    RelativeLayout rlt;
-    TextView txtActive;
-    View view;
-    private ResultReceiver resultReceiver;
-    ImageButton btnHow;
-    boolean service=false;
-    private boolean changeDevice;
-    LottieAnimationView animationView;
-    private MediaPlayer mediaPlayer;
+    private RecyclerView rcl;
+    private SoundAdapter adapter;
+    private List<Sound> list;
+    private Sound sound ;
+    private RelativeLayout rlt;
+    private TextView txtActive;
+    private View view;
+    private ImageButton btnHow;
+    private LottieAnimationView animationView;
     private int time ;
-    AudioManager audioManager;
-    Vibrator vibrator;
     boolean checkSound, checkVibration,checkFlash ;
-    boolean isFlashOn ;
-    private int loopVibration;
-    private Handler handler = new Handler();
 
-    IClickItem iClickItem = new IClickItem() {
+    private ResultReceiver resultReceiver;
+
+    private boolean checkService;
+
+    IClickItemSound iClickItem = new IClickItemSound() {
         @Override
         public void getItem(Sound sound) {
             sendAlarmSound(sound);
 
+        }
+    };
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            checkService = intent.getBooleanExtra("data",false);
+            if (checkService){
+                txtActive.setText(R.string.tap_to_active);
+                int color = getResources().getColor(R.color.blue);
+                txtActive.setTextColor(color);
+                animationView.cancelAnimation();
+
+
+            }
         }
     };
 
@@ -121,48 +128,38 @@ public class MainFragment extends Fragment  {
 
         if (!DataLocalManager.getFirstInstalled()){
             sound = list.get(0);
-            time = 15000;
-            checkSound =true;
+            DataLocalManager.setSound(true);
             DataLocalManager.setSoundAlarm(sound);
             DataLocalManager.setMusic(sound.getMusic());
-            DataLocalManager.setTimeValue(time);
+            DataLocalManager.setTimeValue(15000);
             DataLocalManager.setFlashLight(false);
             DataLocalManager.setVibration(false);
+            DataLocalManager.setService(false);
             DataLocalManager.setFirstInstalled(true);
-        }else {
+        }
             sound =  DataLocalManager.getSoundAlarm();
             checkSound = DataLocalManager.getSound();
             checkVibration = DataLocalManager.getVibration();
             time= DataLocalManager.getTimeValue();
             checkFlash = DataLocalManager.getFlashLight();
+
+        if (!DataLocalManager.getService()){
+            txtActive.setText(R.string.tap_to_active);
+            int color = getResources().getColor(R.color.blue);
+            txtActive.setTextColor(color);
+            animationView.cancelAnimation();
+
+        }else {
+            txtActive.setText(R.string.text_active);
+            int color = getResources().getColor(R.color.time);
+            txtActive.setTextColor(color);
         }
-
-        switch (time) {
-            case 15000:
-                loopVibration = 0;
-                break;
-            case 30000:
-                loopVibration = 2;
-                break;
-            case 60000:
-                loopVibration = 4;
-                break;
-            case 120000:
-                loopVibration = 8;
-                break;
-
-        }
-
-
-        vibrator = (Vibrator) requireActivity().getSystemService(VIBRATOR_SERVICE);
-        audioManager = (AudioManager) requireActivity().getSystemService(AUDIO_SERVICE);
-
 
 
         rlt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!service){
+                if (!DataLocalManager.getService()){
                     clickServiceApp();
                 }else {
                     clickStopServiceApp();
@@ -171,9 +168,10 @@ public class MainFragment extends Fragment  {
 
             }
         });
+        startAnimation();
 
 
-        startMusic();
+
 
 
         btnHow.setOnClickListener(new View.OnClickListener() {
@@ -187,18 +185,10 @@ public class MainFragment extends Fragment  {
     }
 
 
-    private void clickStopServiceApp() {
+    public void clickStopServiceApp() {
         Intent intent = new Intent(requireActivity(), ServiceApp.class);
         requireActivity().stopService(intent);
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
-        vibrator.cancel();
-        stopFlashing();
-        OffFlash();
-        service = false;
+        DataLocalManager.setService(false);
         txtActive.setText(R.string.tap_to_active);
         int color = getResources().getColor(R.color.blue);
         txtActive.setTextColor(color);
@@ -207,12 +197,17 @@ public class MainFragment extends Fragment  {
 
     private void clickServiceApp() {
         Intent intent = new Intent(requireActivity(), ServiceApp.class);
-        intent.putExtra("resultReceiver",resultReceiver);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("resultReceiver",resultReceiver);
+        bundle.putSerializable("sendServiceSound",sound);
+        bundle.putInt("sendServiceTime",time);
+        intent.putExtra("senServiceData",bundle);
         requireActivity().startService(intent);
-        service = true;
+        DataLocalManager.setService(true);
         txtActive.setText(R.string.text_active);
         int color = getResources().getColor(R.color.time);
         txtActive.setTextColor(color);
+        animationView.cancelAnimation();
     }
 
     private void anhXa(){
@@ -249,220 +244,25 @@ public class MainFragment extends Fragment  {
         activityResultLauncher.launch(intent);
     }
 
-    private void startMusic(){
+    private void startAnimation(){
         resultReceiver = new ResultReceiver(new Handler()){
             @Override
             protected void onReceiveResult(int resultCode, Bundle resultData) {
                 super.onReceiveResult(resultCode, resultData);
-                if (resultCode == 10 && resultData != null){
-                    changeDevice = resultData.getBoolean("changeDevice");
+                if (resultCode== RECEIVER_CODE &&  resultData!=null){
+                    boolean changeDevice = resultData.getBoolean("changeDevice");
 
                     if (changeDevice){
 
                         animationView.setRepeatCount(LottieDrawable.INFINITE);
                         animationView.playAnimation();
-                        isSoundActive();
-
-                        isVibrationActive();
-
-                        isFlashLightActive();
-
 
                     }
                 }
             }
         };
-
     }
 
-    private void getVibrationDefault(){
-        if (vibrator.hasVibrator()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(time, VibrationEffect.DEFAULT_AMPLITUDE));
-            } else {
-                vibrator.vibrate(2000);
-            }
-        }
-
-    }
-
-    private void getVibrationStrong(){
-        if (vibrator.hasVibrator()) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                long[] pattern = {0, 200, 500, 200, 500, 200,500, 200, 500,200, 200, 500, 200, 500, 200,500, 200, 500, 200, 500, 200, 500, 200,500, 200, 500, 200, 500, 200, 500, 200,500, 200, 500, 200, 500, 200, 500, 200,500, 200, 500};
-                vibrator.vibrate(VibrationEffect.createWaveform(pattern, loopVibration));
-            } else {
-                vibrator.vibrate(2000);
-            }
-
-        }
-
-    }
-
-    private void getVibrationHeart(){
-        if (vibrator.hasVibrator()) {
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                long[] pattern = {0, 400, 200, 400, 300, 400,300,1000, 400, 200, 400, 300, 400,300,1000, 400, 200, 400, 300, 400,300,1000, 400, 200, 400, 300, 400,300,1000, 400, 200, 400, 300, 400,300,1000, 400, 200, 400, 300, 400,300,1000} ;
-                vibrator.vibrate(VibrationEffect.createWaveform(pattern, loopVibration));
-            } else {
-                vibrator.vibrate(2000);
-            }
-
-        }
-
-    }
-
-
-    private void OnlFlash(){
-        try {
-            CameraManager cameraManager = (CameraManager) requireActivity().getSystemService(Context.CAMERA_SERVICE);
-            String cameraId = cameraManager.getCameraIdList()[0];
-            cameraManager.setTorchMode(cameraId, true);
-            isFlashOn = true;
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private void OffFlash(){
-        try {
-            CameraManager cameraManager = (CameraManager) requireActivity().getSystemService(Context.CAMERA_SERVICE);
-            String cameraId = cameraManager.getCameraIdList()[0];
-            cameraManager.setTorchMode(cameraId, false);
-            isFlashOn = false;
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Runnable flashDefault = new Runnable() {
-        @Override
-        public void run() {
-            if (!isFlashOn){
-                OnlFlash();
-                isFlashOn = true;
-            }else {
-                OffFlash();
-                isFlashOn = false;
-            }
-            handler.postDelayed(this, 1000);
-        }
-    };
-
-    private Runnable flashDisco = new Runnable() {
-        @Override
-        public void run() {
-            if (!isFlashOn){
-                OnlFlash();
-                isFlashOn = true;
-            }else {
-                OffFlash();
-                isFlashOn = false;
-            }
-            handler.postDelayed(this, 600);
-        }
-    };
-
-    public Runnable flashSos = new Runnable() {
-        @Override
-        public void run() {
-            if (!isFlashOn){
-                OnlFlash();
-                isFlashOn = true;
-            }else {
-                OffFlash();
-                isFlashOn = false;
-            }
-            handler.postDelayed(this, 300);
-        }
-    };
-
-
-    private void stopFlashing() {
-        handler.removeCallbacksAndMessages(null);
-    }
-
-    private void isFlashLightActive(){
-        if (checkFlash){
-            DataLocalManager.setFlashLight(true);
-            String flashType = DataLocalManager.getRadioFlash();
-            if (flashType !=null) {
-                if (flashType.equals("default")) {
-                    handler.post(flashDefault);
-                } else if (flashType.equals("disco")) {
-                    handler.post(flashDisco);
-                } else if (flashType.equals("sos")) {
-                    handler.post(flashSos);
-                } else {
-                    handler.post(flashDefault);
-                }
-
-            }
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    stopFlashing();
-                    OffFlash();
-                }
-            },time);
-        }
-
-    }
-
-    private void isVibrationActive(){
-        if (checkVibration){
-            DataLocalManager.setVibration(true);
-            if (vibrator.hasVibrator()){
-                String vibrationType = DataLocalManager.getRadioVibration();
-                if (vibrationType!=null){
-                    if (vibrationType.equals("default")){
-                        getVibrationDefault();
-                    } else if (vibrationType.equals("strong")) {
-                        getVibrationStrong();
-                    }else if (vibrationType.equals("heart")){
-                        getVibrationHeart();
-                    }else {
-                        getVibrationDefault();
-                    }
-
-                }
-
-            }
-        }
-
-    }
-
-    private void isSoundActive(){
-        if (checkSound) {
-            DataLocalManager.setSound(true);
-
-            if (mediaPlayer == null) {
-                mediaPlayer = MediaPlayer.create(requireContext(), sound.getMusic());
-                if (mediaPlayer != null) {
-                    mediaPlayer.start();
-                    mediaPlayer.setLooping(true);
-                }
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                            mediaPlayer.stop();
-                            mediaPlayer.release();
-                            mediaPlayer = null;
-                        }
-                    }
-                }, time);
-
-            } else if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-                mediaPlayer.release();
-                mediaPlayer = null;
-            }
-        }
-    }
 
     @Override
     public void onPause() {
@@ -474,5 +274,14 @@ public class MainFragment extends Fragment  {
     public void onResume() {
         super.onResume();
         adapter.notifyDataSetChanged();
+        IntentFilter filter = new IntentFilter("CHECK_SERVICE");
+        getActivity().registerReceiver(broadcastReceiver, filter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
     }
 }
+

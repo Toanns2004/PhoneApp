@@ -23,7 +23,6 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
     List<Language> languageList ;
     IClickItemLanguage clickItem;
 
-
     private int textColorClick = Color.WHITE;
     private int textColorUnClick = Color.BLACK;
     public LanguageAdapter(List<Language> languageList, IClickItemLanguage item) {
@@ -41,11 +40,12 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
     @Override
     public void onBindViewHolder(@NonNull LanguageViewHolder holder, int position) {
         Language language = languageList.get(position);
+        Language languageLocal = DataLocalManager.getLanguage();
 
         holder.imageView.setImageResource(language.getUri());
         holder.textView.setText(language.getName());
 
-        if (language.getName().equals(DataLocalManager.getLanguageName())){
+        if (language.getName().equals(languageLocal.getName())){
             holder.relativeLayout.setBackgroundResource(R.drawable.custom_language_click);
             holder.textView.setTextColor(textColorClick);
             holder.icon.setVisibility(View.VISIBLE);
@@ -61,7 +61,7 @@ public class LanguageAdapter extends RecyclerView.Adapter<LanguageAdapter.Langua
             @Override
             public void onClick(View v) {
                 clickItem.getItem(language);
-                DataLocalManager.setLanguageName(language.getName());
+                DataLocalManager.setLanguage(language);
                 notifyDataSetChanged();
             }
         });

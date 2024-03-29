@@ -18,11 +18,11 @@
             android:paddingTop="20dp">
             <ImageButton
                 android:id="@+id/frame_icon"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:src="@drawable/frame"
                 android:background="@color/white"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 />
             <ImageButton
                 android:id="@+id/back_icon"
@@ -51,8 +51,8 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/setting"
                 android:background="@color/white"
-                android:layout_marginStart="50dp"
-                android:layout_toEndOf="@id/text_nameApp"
+                android:layout_toLeftOf="@+id/icon_ad"
+                android:layout_marginEnd="10dp"/>
                 />
             <ImageButton
                 android:id="@+id/icon_ad"
@@ -60,8 +60,9 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ad"
                 android:background="@color/white"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/icon_setting"/>
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                />
 
         </RelativeLayout>
         <FrameLayout

@@ -2,6 +2,7 @@ package com.example.donttouchmyphone.services;
 
 import android.content.Context;
 
+import com.example.donttouchmyphone.models.Language;
 import com.example.donttouchmyphone.models.Sound;
 import com.google.gson.Gson;
 
@@ -24,7 +25,9 @@ public class DataLocalManager {
     private static final String FIRST_SETTINGS = "FIRST_SETTINGS";
     private static final String SEEKBAR_SETTING = "SEEKBAR_SETTING";
     private static final String CHECK_EXTENSION = "CHECK_EXTENSION";
-    private static final String KEY_LANGUAGE_NAME = "KEY_LANGUAGE_NAME";
+    private static final String KEY_LANGUAGE_CODE = "KEY_LANGUAGE_CODE";
+    private static final String CHECK_SERVICE = "CHECK_SERVICE";
+    private static final String CHECK_INTERNET = "CHECK_INTERNET";
 
     private static DataLocalManager dataLocalManager;
     private SharedPreferencesApp preferencesApp;
@@ -100,21 +103,26 @@ public class DataLocalManager {
     }
 
     public static String getLanguageCode(){
-        return DataLocalManager.getDataLocalManager().preferencesApp.getString(KEY_LANGUAGE);
+        return DataLocalManager.getDataLocalManager().preferencesApp.getString(KEY_LANGUAGE_CODE);
     }
 
     public static void saveLanguageCode(String languageCode){
-        DataLocalManager.getDataLocalManager().preferencesApp.setString(KEY_LANGUAGE,languageCode);
+        DataLocalManager.getDataLocalManager().preferencesApp.setString(KEY_LANGUAGE_CODE,languageCode);
     }
 
-    public static String getLanguageName(){
-        return DataLocalManager.getDataLocalManager().preferencesApp.getString(KEY_LANGUAGE_NAME);
+
+    public static void setLanguage(Language value){
+        Gson gson = new Gson();
+        String languageGson = gson.toJson(value);
+        DataLocalManager.getDataLocalManager().preferencesApp.setString(KEY_LANGUAGE,languageGson);
     }
 
-    public static void setLanguageName(String value){
-        DataLocalManager.getDataLocalManager().preferencesApp.setString(KEY_LANGUAGE_NAME,value);
+    public static Language getLanguage(){
+        String languageJson = DataLocalManager.getDataLocalManager().preferencesApp.getString(KEY_LANGUAGE);
+        Gson gson = new Gson();
+        Language language = gson.fromJson(languageJson, Language.class);
+        return language;
     }
-
     public static void setSoundAlarm(Sound sound){
         Gson gson = new Gson();
         String soundJson = gson.toJson(sound);
@@ -189,4 +197,19 @@ public class DataLocalManager {
         return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(CHECK_EXTENSION);
     }
 
+    public static void setService(boolean value){
+        DataLocalManager.getDataLocalManager().preferencesApp.setBoolean(CHECK_SERVICE,value);
+    }
+
+    public static boolean getService(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(CHECK_SERVICE);
+    }
+
+    public static void setInternet(boolean value){
+        DataLocalManager.getDataLocalManager().preferencesApp.setBoolean(CHECK_INTERNET,value);
+    }
+
+    public static boolean getInternet(){
+        return DataLocalManager.getDataLocalManager().preferencesApp.getBoolean(CHECK_INTERNET);
+    }
 }

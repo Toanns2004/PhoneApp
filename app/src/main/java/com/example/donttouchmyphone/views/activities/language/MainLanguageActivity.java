@@ -28,29 +28,16 @@ public class MainLanguageActivity extends AppCompatActivity {
     private RecyclerView rlv;
     private LanguageAdapter adapter;
     private List<Language> list;
+    Language language;
 
     private String languageCode ;
     private String previousActivityName;
     private static final String KEY_PREVIOUS_ACTIVITY ="KEY_PREVIOUS_ACTIVITY";
     IClickItemLanguage iClickItem = new IClickItemLanguage() {
         @Override
-        public void getItem(Language language) {
+        public void getItem(Language languageItem) {
+            language = languageItem;
 
-            btnOk.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setLanguageObject(language);
-                    DataLocalManager.setLanguageName(language.getName());
-                    Intent intent;
-                    if (KEY_PREVIOUS_ACTIVITY.equals(previousActivityName)){
-                        intent = new Intent(MainLanguageActivity.this, MainActivity.class);
-                    }else {
-                        intent = new Intent(MainLanguageActivity.this, IntroActivity.class);
-                    }
-                    startActivity(intent);
-
-                }
-            });
         }
     };
     @Override
@@ -59,9 +46,12 @@ public class MainLanguageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_language);
         anhXa();
         if (!DataLocalManager.getFirstInstalled()){
-            DataLocalManager.setLanguageName(list.get(0).getName());
+            DataLocalManager.setLanguage(list.get(0));
+            setLanguageObject(list.get(0));
             setLanguage("en");
         }
+
+        language = DataLocalManager.getLanguage();
         setLanguage(DataLocalManager.getLanguageCode());
         adapter = new LanguageAdapter(list,iClickItem);
         rlv.setLayoutManager(new GridLayoutManager(MainLanguageActivity.this,2));
@@ -70,7 +60,21 @@ public class MainLanguageActivity extends AppCompatActivity {
         previousActivityName = getIntent().getStringExtra("activity");
 
 
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setLanguageObject(language);
+                DataLocalManager.setLanguage(language);
+                Intent intent;
+                if (KEY_PREVIOUS_ACTIVITY.equals(previousActivityName)){
+                    intent = new Intent(MainLanguageActivity.this, MainActivity.class);
+                }else {
+                    intent = new Intent(MainLanguageActivity.this, IntroActivity.class);
+                }
+                startActivity(intent);
 
+            }
+        });
 
     }
     private void anhXa(){

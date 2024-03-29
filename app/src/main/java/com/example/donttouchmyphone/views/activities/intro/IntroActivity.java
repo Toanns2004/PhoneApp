@@ -13,10 +13,13 @@ import com.example.donttouchmyphone.views.activities.intro.adapter.IntroAdapter;
 import com.example.donttouchmyphone.views.activities.main.MainActivity;
 import com.example.donttouchmyphone.views.activities.permission.PermissionMain;
 
+import me.relex.circleindicator.CircleIndicator3;
+
 public class IntroActivity extends AppCompatActivity {
 
     private Button btnContinue;
     private ViewPager2 viewPager2;
+    private CircleIndicator3 circleIndicator;
 
 
     @Override
@@ -25,10 +28,12 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
         viewPager2 = findViewById(R.id.viewPager);
         btnContinue = findViewById(R.id.button_continue_intro);
+        circleIndicator = findViewById(R.id.indicator_intro);
 
 
         IntroAdapter introAdapter = new IntroAdapter(this);
         viewPager2.setAdapter(introAdapter);
+        circleIndicator.setViewPager(viewPager2);
 
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override

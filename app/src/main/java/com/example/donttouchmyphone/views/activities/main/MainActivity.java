@@ -1,6 +1,8 @@
 package com.example.donttouchmyphone.views.activities.main;
 
 
+import static com.example.donttouchmyphone.services.ServiceApp.ACTION_STOP_SERVICE;
+
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
@@ -31,6 +33,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.donttouchmyphone.R;
+import com.example.donttouchmyphone.services.ServiceApp;
 import com.example.donttouchmyphone.views.activities.language.MainLanguageActivity;
 import com.example.donttouchmyphone.services.CheckInternet;
 import com.example.donttouchmyphone.views.fragments.MainFragment;
@@ -71,8 +74,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         broadcastReceiverApp = new CheckInternet();
         registerNetworkBroadcast();
 
-        Intent intent = getIntent();
-        wifi = intent.getBooleanExtra("WIFI",false);
+         MainFragment mainFragment = (MainFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_main);
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(R.id.frame_layout_main,new MainFragment());
         fragmentTransaction.commit();
@@ -137,6 +139,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         });
 
+
+        Intent intent = getIntent();
+        if (intent.getAction() != null && intent.getAction().equals(ACTION_STOP_SERVICE)) {
+            DataLocalManager.setService(false);
+            stopService(new Intent(this, ServiceApp.class));
+        }
         onBackPress();
     }
 
@@ -199,17 +207,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent1);
             navigationView.getMenu().findItem(id).setCheckable(false);
         }else if (id== R.id.support_us) {
-            if (!wifi){
+            if (!DataLocalManager.getInternet()){
                 dialog.show();
             }
             navigationView.getMenu().findItem(id).setCheckable(false);
         } else if (id== R.id.share_for_friend) {
-            if (!wifi){
+            if (!DataLocalManager.getInternet()){
                 dialog.show();
             }
             navigationView.getMenu().findItem(id).setCheckable(false);
         }else  if (id == R.id.feedback){
-            if (!wifi){
+            if (!DataLocalManager.getInternet()){
                 dialog.show();
             }
             navigationView.getMenu().findItem(id).setCheckable(false);
