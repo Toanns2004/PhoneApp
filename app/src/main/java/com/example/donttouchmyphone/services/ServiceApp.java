@@ -381,17 +381,6 @@ public class ServiceApp extends Service implements SensorEventListener {
         stopFlashing();
     }
 
-    private boolean isAppRunning(Context context, Class<?> activityClass) {
-        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
-        if (tasks != null) {
-            for (ActivityManager.RunningTaskInfo task : tasks) {
-                if (task.topActivity != null && task.topActivity.getClassName().equals(activityClass.getName())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
+
 
 }
