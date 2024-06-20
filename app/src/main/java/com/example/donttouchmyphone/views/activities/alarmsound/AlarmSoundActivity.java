@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -28,7 +27,7 @@ import com.example.donttouchmyphone.views.interfaces.IClickTime;
 import com.example.donttouchmyphone.views.activities.main.MainActivity;
 import com.example.donttouchmyphone.models.Sound;
 import com.example.donttouchmyphone.models.Time;
-import com.example.donttouchmyphone.services.DataLocalManager;
+import com.example.donttouchmyphone.controll.DataLocalManager;
 
 import java.util.ArrayList;
 import java.util.List;

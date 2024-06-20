@@ -1,7 +1,6 @@
-package com.example.donttouchmyphone.services;
+package com.example.donttouchmyphone.controll;
 
 import android.annotation.SuppressLint;
-import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -31,7 +30,6 @@ import com.example.donttouchmyphone.models.Sound;
 import com.example.donttouchmyphone.views.activities.main.MainActivity;
 
 import java.util.Date;
-import java.util.List;
 
 public class ServiceApp extends Service implements SensorEventListener {
     public static final int RECEIVER_CODE = 10;

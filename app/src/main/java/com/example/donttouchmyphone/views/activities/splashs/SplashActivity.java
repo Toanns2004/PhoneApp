@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.example.donttouchmyphone.R;
-import com.example.donttouchmyphone.services.DataLocalManager;
+import com.example.donttouchmyphone.controll.DataLocalManager;
 import com.example.donttouchmyphone.views.activities.language.MainLanguageActivity;
 import com.example.donttouchmyphone.views.activities.main.MainActivity;
 

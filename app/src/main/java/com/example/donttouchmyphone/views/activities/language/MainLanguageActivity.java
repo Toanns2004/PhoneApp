@@ -16,7 +16,7 @@ import com.example.donttouchmyphone.views.activities.language.adapter.LanguageAd
 import com.example.donttouchmyphone.views.activities.intro.IntroActivity;
 import com.example.donttouchmyphone.views.activities.main.MainActivity;
 import com.example.donttouchmyphone.models.Language;
-import com.example.donttouchmyphone.services.DataLocalManager;
+import com.example.donttouchmyphone.controll.DataLocalManager;
 import com.example.donttouchmyphone.views.interfaces.IClickItemLanguage;
 
 import java.util.ArrayList;

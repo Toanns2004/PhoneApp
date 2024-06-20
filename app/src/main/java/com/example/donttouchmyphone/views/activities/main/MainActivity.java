@@ -1,7 +1,7 @@
 package com.example.donttouchmyphone.views.activities.main;
 
 
-import static com.example.donttouchmyphone.services.ServiceApp.ACTION_STOP_SERVICE;
+import static com.example.donttouchmyphone.controll.ServiceApp.ACTION_STOP_SERVICE;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
@@ -27,18 +27,17 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.donttouchmyphone.R;
-import com.example.donttouchmyphone.services.ServiceApp;
+import com.example.donttouchmyphone.controll.ServiceApp;
 import com.example.donttouchmyphone.views.activities.language.MainLanguageActivity;
-import com.example.donttouchmyphone.services.CheckInternet;
+import com.example.donttouchmyphone.controll.CheckInternet;
 import com.example.donttouchmyphone.views.fragments.MainFragment;
 import com.example.donttouchmyphone.views.fragments.SettingsFragment;
-import com.example.donttouchmyphone.services.DataLocalManager;
+import com.example.donttouchmyphone.controll.DataLocalManager;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.Locale;

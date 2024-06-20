@@ -23,7 +23,7 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 
 import com.example.donttouchmyphone.R;
-import com.example.donttouchmyphone.services.DataLocalManager;
+import com.example.donttouchmyphone.controll.DataLocalManager;
 
 public class SettingsFragment extends Fragment {
 

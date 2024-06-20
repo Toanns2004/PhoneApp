@@ -29,7 +29,7 @@
     <uses-feature android:name="android.hardware.camera.flash" />
 
     <application
-        android:name=".services.ApplicationApp"
+        android:name=".controll.ApplicationApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -74,7 +74,7 @@
 
         </activity>
 
-        <service android:name=".services.ServiceApp" />
+        <service android:name=".controll.ServiceApp" />
     </application>
 
 </manifest>

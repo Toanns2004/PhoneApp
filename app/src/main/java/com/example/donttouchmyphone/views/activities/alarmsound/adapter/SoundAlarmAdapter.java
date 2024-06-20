@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.donttouchmyphone.R;
 import com.example.donttouchmyphone.views.interfaces.IClickTime;
 import com.example.donttouchmyphone.models.Sound;
-import com.example.donttouchmyphone.services.DataLocalManager;
+import com.example.donttouchmyphone.controll.DataLocalManager;
 
 import java.util.List;
 

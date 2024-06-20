@@ -3,7 +3,7 @@ package com.example.donttouchmyphone.views.fragments;
 import static android.app.Activity.RESULT_OK;
 
 
-import static com.example.donttouchmyphone.services.ServiceApp.RECEIVER_CODE;
+import static com.example.donttouchmyphone.controll.ServiceApp.RECEIVER_CODE;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -16,8 +16,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,8 +36,8 @@ import com.example.donttouchmyphone.views.activities.how.HowToActivity;
 import com.example.donttouchmyphone.models.Sound;
 import com.example.donttouchmyphone.views.activities.main.adapter.SoundAdapter;
 import com.example.donttouchmyphone.views.interfaces.IClickItemSound;
-import com.example.donttouchmyphone.services.DataLocalManager;
-import com.example.donttouchmyphone.services.ServiceApp;
+import com.example.donttouchmyphone.controll.DataLocalManager;
+import com.example.donttouchmyphone.controll.ServiceApp;
 
 import java.util.ArrayList;
 import java.util.List;
